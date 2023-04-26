@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
-const FlexBox_B = () => {
+const FlexBox_B = ({ buttonhide }) => {
   return (
     <View style={styles.body}>
       <StatusBar style="auto" />
@@ -14,6 +14,8 @@ const FlexBox_B = () => {
           <Text style={[styles.box, styles.color2]}>Box 2</Text>
           <Text style={[styles.box, styles.color3]}>Box 3</Text>
         </View>
+        {/* {buttonhide ? null : <Button title="Clec Me" />} */}
+
         <View style={styles.conten_Box}>
           <Text style={[styles.box, styles.color4]}>Box 4</Text>
           <Text style={[styles.box, styles.color5]}>Box 5</Text>
@@ -26,28 +28,29 @@ const FlexBox_B = () => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    // display: "flex",
+    width: "100%",
   },
   conten_A: {
     flex: 1,
-    display: "flex",
+    // display: "flex",
     // backgroundColor: "#DCD0FF",
-
     justifyContent: "center",
     textAlign: "center",
     alignItems: "center",
   },
   conten_B: {
     flex: 1,
-    display: "flex",
+    // display: "flex",
   },
   conten_Box: {
     flex: 1,
-    display: "flex",
+    // display: "flex",
     flexDirection: "row",
   },
   box: {
     flex: 1,
-    display: 1,
+    // display: 1,
     justifyContent: "center",
     textAlign: "center",
   },

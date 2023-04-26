@@ -1,7 +1,10 @@
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 const FlexBox_A = () => {
+  const [name, setName] = useState("Welcome");
+  console.log("useState ==>> ", name);
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -32,16 +35,19 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "row",
-    columnGap: "10px",
+    // columnGap: "10px",
     // backgroundColor: "#DCD0FF",
   },
   camponet: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
+    // justifyContent: "center",
+    // textAlign: "center",
     margin: "1%",
   },
   text: {
+    // flex: 1,
     display: "flex",
     margin: "3%",
     height: "20%",
