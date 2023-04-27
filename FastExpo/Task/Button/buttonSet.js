@@ -4,17 +4,24 @@ import { Button, StyleSheet, Text, View } from "react-native";
 
 const ButtonDemo = () => {
   return (
-    <View style={styles.buttonBody}>
-      <Button title="Resat" />
-      <Button title="Set" />
+    <View style={styles.Body}>
+      <View style={styles.buttonBody}>
+        <Button title="Resat" color={"red"} />
+      </View>
+      <View style={styles.buttonBody}>
+        <Button title="Set" />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonBody: {
+  Body: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
+  },
+  buttonBody: {
+    width: "50%",
   },
 });
 export default ButtonDemo;
