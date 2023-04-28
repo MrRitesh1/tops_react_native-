@@ -1,26 +1,28 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 const ButtonDemo = () => {
   return (
-    <View style={styles.Body}>
+    <SafeAreaView style={styles.Body}>
       <View style={styles.buttonBody}>
         <Button title="Resat" color={"red"} />
       </View>
       <View style={styles.buttonBody}>
         <Button title="Set" />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   Body: {
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
   },
   buttonBody: {
+    flex: 1,
+    justifyContent: "flex-end",
     width: "50%",
   },
 });

@@ -33,16 +33,22 @@ const FlexBoxTask_A = () => {
             <Text style={[styles.boxs, styles.color3]}>Box 2</Text>
             <Text style={[styles.boxs, styles.color9]}>Box 3</Text>
             <Text style={[styles.boxs, styles.color3]}>Box 4</Text>
+            <Text style={[styles.boxs, styles.color11]}>Box 3</Text>
+            <Text style={[styles.boxs, styles.color12]}>Box 3</Text>
           </View>
           <View style={styles.conten_Box}>
             <Text style={[styles.boxs, styles.color8]}>Box 1</Text>
             <Text style={[styles.boxs, styles.color7]}>Box 3</Text>
+            <Text style={[styles.boxs, styles.color13]}>Box 3</Text>
+            <Text style={[styles.boxs, styles.color14]}>Box 3</Text>
           </View>
           <View style={styles.conten_Box}>
             <Text style={[styles.boxs, styles.color0]}>Box 1</Text>
             <Text style={[styles.boxs, styles.color3]}>Box 2</Text>
             <Text style={[styles.boxs, styles.color2]}>Box 3</Text>
             <Text style={[styles.boxs, styles.color3]}>Box 4</Text>
+            <Text style={[styles.boxs, styles.color9]}>Box 3</Text>
+            <Text style={[styles.boxs, styles.color14]}>Box 3</Text>
           </View>
         </View>
       </View>
@@ -91,7 +97,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   boxs: {
-    flex: 1,
+    flex: 2,
     // display: 1,
     justifyContent: "center",
     textAlign: "center",
@@ -111,9 +117,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFF00",
   },
   color7: {
+    flex: 4,
     backgroundColor: "#FFA500",
   },
   color8: {
+    flex: 4,
     backgroundColor: "#FFFF00",
   },
   color3: {
@@ -127,6 +135,21 @@ const styles = StyleSheet.create({
   },
   color0: {
     backgroundColor: "blue",
+  },
+  color11: {
+    flex: 1,
+    backgroundColor: "#cc0066",
+  },
+  color12: {
+    flex: 0.5,
+
+    backgroundColor: "#ccffff",
+  },
+  color13: {
+    backgroundColor: "#cc0066",
+  },
+  color14: {
+    backgroundColor: "#ccffff",
   },
 });
 

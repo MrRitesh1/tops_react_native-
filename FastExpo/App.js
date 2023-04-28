@@ -9,6 +9,12 @@ import { useState } from "react";
 import MepDemo from "./src/Meps/mep";
 import FlexBoxTask_A from "./Task/FlexBob/flexBoxTask_a";
 import FlexBoxTask_B from "./Task/FlexBob/flexBoxTask_b";
+import ListFollowers from "./Task/ListView_in_map/listFollowers";
+import ListPrimary from "./Task/ListView_in_map/listPrimary";
+import FileListDemo from "./Task/ListView_in_map/FileLists";
+import SectionListDemo from "./Task/ListView_in_map/SectionLists";
+import LoginScreen_A from "./Task/Login/Login_A";
+import LoginScreen_B from "./Task/Login/Login_B";
 
 export default function App() {
   const [name, setName] = useState("Doremon");
@@ -30,10 +36,17 @@ export default function App() {
         <Cart name={name} hendalPress={() => setName("Welcome")} />
         <Cart buttonHide /> */}
       {/* --------------------------------------------------------------------------------------------- */}
+      {/* <MepDemo /> */}
       {/* </View> */}
 
       {/* Task ......................................................................... */}
-      {/* <View style={styles.countar}>
+
+      {/* <ButtonDemo /> */}
+
+      {/* </ScrollView> */}
+
+      {/* <ScrollView>
+        <View style={styles.countar}>
           <Text
             style={{
               fontSize: 20,
@@ -44,13 +57,37 @@ export default function App() {
           >
             My-Task App
           </Text>
-        </View> */}
-      {/* <Countar /> */}
-      {/* <ButtonDemo /> */}
-      {/* </ScrollView> */}
+        </View>
+        <Countar />
+      </ScrollView> */}
+
+      {/* <ScrollView>
+        <View style={{ backgroundColor: "#9AFEFF" }}>
+          <ListFollowers />
+        </View>
+      </ScrollView> */}
+
+      {/* <ScrollView>
+        <View style={{ backgroundColor: "#ff5050" }}>
+          <ListPrimary />
+        </View>
+      </ScrollView> */}
+      {/* <ScrollView>
+        <View style={{ backgroundColor: "#9AFEFF" }}>
+          <FileListDemo />
+        </View>
+      </ScrollView> */}
+      {/* <ScrollView>
+        <View style={{ backgroundColor: "#9AFEFF" }}>
+          <SectionListDemo />
+        </View>
+      </ScrollView> */}
+
+      {/* <LoginScreen_A /> */}
+      <LoginScreen_B />
 
       {/* <FlexBoxTask_A /> */}
-      <FlexBoxTask_B />
+      {/* <FlexBoxTask_B /> */}
     </>
   );
 }

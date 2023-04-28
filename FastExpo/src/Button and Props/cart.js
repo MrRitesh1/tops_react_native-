@@ -8,6 +8,7 @@ const Cart = ({ name, buttonHide = false, hendalPress }) => {
   // const hendalPress = () => {
   //   console.log(name);
   // };
+
   return (
     <View style={styles.body}>
       <View style={styles.cart}>

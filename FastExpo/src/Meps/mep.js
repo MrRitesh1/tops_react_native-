@@ -1,8 +1,18 @@
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  FileList,
+  Text,
+  View,
+} from "react-native";
 import { useState } from "react";
 
 const MepDemo = () => {
+  const [refreshig, setRefreshig] = useState(true);
+
   const [data, setData] = useState([
     { key: 1, item: "Teast 1" },
     { key: 2, item: "Teast 2" },
@@ -18,17 +28,31 @@ const MepDemo = () => {
     { key: 12, item: "Teast 12" },
     { key: 13, item: "Teast 13" },
   ]);
+
+  const onRefesh = () => {
+    setRefreshig(false);
+    setName([...data, { key: 1, item: "Teast 14" }]);
+    setRefreshig(false);
+  };
   return (
     <SafeAreaView style={styles.body}>
-      {/* <View style={styles.dataBox}>
+      <ScrollView
+      // refreshControl={
+      //   <RefreshControl refreshing={refreshig} onRefresh={onRefesh} />
+      // }
+      >
+        {/* <View style={styles.dataBox}>
         <Text style={styles.text}>Welcome</Text>
       </View> */}
 
-      {data.map((a) => {
-        <View style={styles.dataBox} key={a.key}>
-          <Text style={styles.text}>{a.item}</Text>
-        </View>;
-      })}
+        {data.map((a) => {
+          return (
+            <View style={styles.dataBox} key={a.key}>
+              <Text style={styles.text}>{a.item}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
     </SafeAreaView>
   );
 };
