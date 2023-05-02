@@ -6,12 +6,20 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 const SectionListDemo = () => {
   const data = [
     {
-      titale: "Fast",
-      batter: [" id: 1001", "type: Regular"],
+      title: "Main dishes",
+      data: ["Pizza", "Burger", "Risotto"],
     },
     {
-      titale: "Secand",
-      topping: ["id: 5001", "type: None", "type: Glazed"],
+      title: "Sides",
+      data: ["French Fries", "Onion Rings", "Fried Shrimps"],
+    },
+    {
+      title: "Drinks",
+      data: ["Water", "Coke", "Beer"],
+    },
+    {
+      title: "Desserts",
+      data: ["Cheese Cake", "Ice Cream"],
     },
   ];
 
@@ -19,26 +27,23 @@ const SectionListDemo = () => {
     <SafeAreaView style={styles.body}>
       <ScrollView>
         <Text style={[styles.hedar, styles.shado]}>SectionListDemo</Text>
-        <View style={styles.itam}>
-          <Text style={styles.text}>Harsh Davara</Text>
-        </View>
+
         <SectionList
-          keyExtractor={(item, index) => index.toString()}
+          // horizontal
           sections={data}
-          renderItem={({ item }) => {
-            return (
-              <View style={styles.itam}>
-                <Text style={styles.text}>{item}</Text>
-              </View>
-            );
-          }}
-          renderSectionHeader={({ section }) => {
-            return (
-              <View style={styles.itam}>
-                <Text style={styles.text}>{section.titale}</Text>
-              </View>
-            );
-          }}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.itam}>
+              <Text style={styles.text}>{item}</Text>
+            </View>
+          )}
+          renderSectionHeader={({ section }) => (
+            <View style={[styles.itam, styles.itamHedars]}>
+              <Text style={{ fontSize: 25, color: "#fff" }}>
+                {section.title}
+              </Text>
+            </View>
+          )}
         />
       </ScrollView>
     </SafeAreaView>
@@ -72,6 +77,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+
+  itamHedars: {
+    textAlign: "center",
+    justifyContent: "center",
+    backgroundColor: "red",
   },
   text: {
     fontSize: 20,

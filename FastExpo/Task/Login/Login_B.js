@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
   Button,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -79,7 +80,13 @@ const LoginScreen_B = () => {
         </View>
         <View style={styles.bottamDizin}>
           <View style={styles.bottamDizinL}></View>
-          <View style={styles.bottamDizinR}></View>
+
+          <View
+            style={[
+              { borderTopLeftRadius: Platform.OS == "ios" ? 350 : 150 },
+              styles.bottamDizinR,
+            ]}
+          ></View>
         </View>
       </View>
     </SafeAreaView>
@@ -151,15 +158,16 @@ const styles = StyleSheet.create({
     height: 70,
     width: 100,
     justifyContent: "flex-end",
-    borderTopRightRadius: 100,
+    // borderTopRightRadius: 100,
     borderTopLeftRadius: 10,
-
+    borderTopRightRadius: Platform.OS == "ios" ? 150 : 100,
     backgroundColor: "#ff884d",
   },
   bottamDizinR: {
     height: 150,
     width: 150,
-    borderTopLeftRadius: 150,
+    // borderTopLeftRadius: 150,
+
     backgroundColor: "#ffbb99",
   },
 });

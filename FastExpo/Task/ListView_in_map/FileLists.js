@@ -9,19 +9,19 @@ import {
 import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 const FileListDemo = () => {
-  const [Itam, setItam] = useState([
-    { name: "Amy Sarha" },
-    { name: "Chirag Jackos" },
-    { name: "Amanda Martin" },
-    { name: "Jiganesh Dakhara" },
-    { name: "Doremon Sarha" },
-    { name: "Jay Pande" },
-    { name: "Krutik Jasani" },
-    { name: "Vivek Makavana" },
-    { name: "Mayur Josi" },
-    { name: "Keyur Bhalani" },
-    { name: "Ritesh Bodhara" },
-    { name: "Haresh Davara" },
+  const [DATA, setData] = useState([
+    { key: 1, FName: "Amy", LName: "Sarha" },
+    { key: 2, FName: "Chirag", LName: "Jackos" },
+    { key: 3, FName: "Amanda", LName: "Martin" },
+    { key: 4, FName: "Jiganesh", LName: "Dakhara" },
+    { key: 5, FName: "Doremon", LName: "Sarha" },
+    { key: 6, FName: "Jay", LName: "Pande" },
+    { key: 7, FName: "Krutik", LName: "Jasani" },
+    { key: 8, FName: "Vivek", LName: "Makavana" },
+    { key: 9, FName: "Mayur", LName: "Josi" },
+    { key: 10, FName: "Keyur", LName: "Bhalani" },
+    { key: 11, FName: "Ritesh", LName: "Bodhara" },
+    { key: 12, FName: "Haresh", LName: "Davara" },
   ]);
 
   return (
@@ -33,16 +33,13 @@ const FileListDemo = () => {
         </View> */}
 
         <FlatList
-          // horizontal
-          data={Itam}
+          data={DATA}
           // keyExtractor={(itam, index) => index.toString()}
-          renderItem={(itam) => {
-            return (
-              <View style={styles.itam}>
-                <Text style={styles.text}>{itam.name}</Text>
-              </View>
-            );
-          }}
+          renderItem={({ item }) => (
+            <View style={styles.itam}>
+              <Text style={styles.text}>{item.FName + " " + item.LName}</Text>
+            </View>
+          )}
         />
       </ScrollView>
     </SafeAreaView>

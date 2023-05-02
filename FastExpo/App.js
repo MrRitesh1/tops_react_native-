@@ -15,6 +15,7 @@ import FileListDemo from "./Task/ListView_in_map/FileLists";
 import SectionListDemo from "./Task/ListView_in_map/SectionLists";
 import LoginScreen_A from "./Task/Login/Login_A";
 import LoginScreen_B from "./Task/Login/Login_B";
+import Cart_A from "./Task/Cart/cart_A";
 
 export default function App() {
   const [name, setName] = useState("Doremon");
@@ -88,6 +89,8 @@ export default function App() {
 
       {/* <FlexBoxTask_A /> */}
       {/* <FlexBoxTask_B /> */}
+
+      {/* <Cart_A /> */}
     </>
   );
 }
