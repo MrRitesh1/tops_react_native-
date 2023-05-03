@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import CostamButton from "../../Eliment/CostamButton";
 
 const ButtonDemo = () => {
   return (
@@ -11,6 +12,7 @@ const ButtonDemo = () => {
       <View style={styles.buttonBody}>
         <Button title="Set" />
       </View>
+      {/* <CostamButton lebal={"Welcom"} /> */}
     </SafeAreaView>
   );
 };

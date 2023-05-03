@@ -34,7 +34,7 @@ const LoginScreen_B = () => {
               <Text>LOGIN</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableHighlight>
             <Text
               style={{
                 justifyContent: "center",
@@ -46,7 +46,7 @@ const LoginScreen_B = () => {
             >
               Forget Password ?
             </Text>
-          </TouchableOpacity>
+          </TouchableHighlight>
           <View style={styles.socialmedia}>
             <TouchableOpacity>
               <Text style={[styles.info_text, styles.colorGoogle]}>Google</Text>

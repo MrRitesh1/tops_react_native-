@@ -1,42 +1,69 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
+  Alert,
   Button,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableHighlight,
   TouchableOpacity,
   View,
 } from "react-native";
 
 const LoginScreen_A = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [login, setLogin] = useState(false);
+
+  const handleSubmit = () => {
+    if (email.length > 3) {
+      setLogin(!login);
+    } else {
+      Alert.alert("Werning", "Plese Enter name", [
+        { text: "ok", onPress: () => console.log("ok Pressed") },
+      ]);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.mainBody}>
       <View style={styles.body}>
         <View style={styles.box_A}>
           <View style={styles.cantenat_body}>
             <Text style={styles.bodyTaxtTop}>LOGIN</Text>
+            <Text style={styles.bodyTaxtTop}>Welcom {login && email}</Text>
           </View>
         </View>
         <View style={styles.cantenatBody}>
           <View style={[styles.cantenat, styles.shado]}>
-            <Text style={styles.text}>EMAIL</Text>
-            <TextInput style={styles.textInput} placeholder="Email" />
+            {/* <Text style={styles.text}>EMAIL</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Email"
+              value={email}
+              onChangeText={(value) => setEmail(value)}
+            /> */}
             <Text style={styles.text}>PASSWORD</Text>
             <TextInput
-              secureTextEntry={true}
+              editable
               style={styles.textInput}
               placeholder="Password"
+              value={password}
+              onChangeText={(value) => setPassword(value)}
             />
           </View>
         </View>
         <View style={styles.box_B}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setLogin(handleSubmit)}>
             <View style={styles.button}>
-              <Text style={{ fontSize: 18, color: "#fff" }}>LOGIN</Text>
+              <Text style={{ fontSize: 18, color: "#fff" }}>
+                {login ? "OK" : "LOGIN"}
+              </Text>
             </View>
           </TouchableOpacity>
+
           <Text style={styles.bodyTaxtBottam}>Don't have account</Text>
         </View>
       </View>

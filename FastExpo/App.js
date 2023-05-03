@@ -16,6 +16,7 @@ import SectionListDemo from "./Task/ListView_in_map/SectionLists";
 import LoginScreen_A from "./Task/Login/Login_A";
 import LoginScreen_B from "./Task/Login/Login_B";
 import Cart_A from "./Task/Cart/cart_A";
+import Model_A from "./Task/Model/model_A";
 
 export default function App() {
   const [name, setName] = useState("Doremon");
@@ -42,7 +43,7 @@ export default function App() {
 
       {/* Task ......................................................................... */}
 
-      {/* <ButtonDemo /> */}
+      <ButtonDemo />
 
       {/* </ScrollView> */}
 
@@ -85,10 +86,12 @@ export default function App() {
       </ScrollView> */}
 
       {/* <LoginScreen_A /> */}
-      <LoginScreen_B />
+      {/* <LoginScreen_B /> */}
 
       {/* <FlexBoxTask_A /> */}
       {/* <FlexBoxTask_B /> */}
+
+      {/* <Model_A /> */}
 
       {/* <Cart_A /> */}
     </>
