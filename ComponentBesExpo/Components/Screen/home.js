@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { styles } from "../css/homeCSS";
 import { useState } from "react";
-// import Login from "/ComponentBesExpo/image/B.png";
+// import Login from "../../image/B.png";
 import BodyImage from "../Screen/Map.png";
 import Images from "../Screen/images.jpg";
 import { RoomData } from "../../data/prodactData";

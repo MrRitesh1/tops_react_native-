@@ -5,7 +5,7 @@ import SignUp from "./Components/Screen/Register/signUp";
 const App = () => {
   return (
     <>
-      <SignUp />
+      {/* <SignUp /> */}
       <Home />
     </>
   );
