@@ -6,21 +6,22 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { styles } from "../css/homeCSS";
-import { useState } from "react";
+import { styles } from "../../css/homeCSS";
+import { useState, useRef } from "react";
 // import Login from "../../image/B.png";
-import BodyImage from "../Screen/Map.png";
-import Images from "../Screen/images.jpg";
-import { RoomData } from "../../data/prodactData";
+import BodyImage from "../../image/Map.png";
+import Images from "../../image/images.jpg";
+import { RoomData } from "../../../data/prodactData";
 import { FlatList } from "react-native";
-import { Locations } from "../../data/locations";
+import { Locations } from "../../../data/locations";
 import { SectionList } from "react-native";
-import { Itams } from "../../data/itam";
+import { Itams } from "../../../data/itam";
 const Home = () => {
   return (
     <View style={styles.mainBody}>
       <View style={styles.componetBody}>
         <ImageBackground
+          // ref={"../../image/Map.png"}
           source={BodyImage}
           style={styles.componet_a}
         ></ImageBackground>
@@ -30,6 +31,7 @@ const Home = () => {
             <ScrollView>
               <View style={styles.componet_b_Text_body}>
                 <FlatList
+                  // style={{ width: 200, height: 30 }}
                   // horizontal
                   data={RoomData}
                   renderItem={({ item }) => (
