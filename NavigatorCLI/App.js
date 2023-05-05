@@ -1,6 +1,6 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScrren from './src/Screen/Home';
@@ -10,35 +10,34 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import CartScrren from './src/Screen/Cart';
-import ChatScrren from './src/Screen/Chat';
 
 // const Stack = createStackNavigator();
 // const Drawer = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
-const TopTab = createMaterialTopTabNavigator();
+// const TopTab = createMaterialTopTabNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <TopTab.Navigator>
-        <TopTab.Screen name="Home" component={BottomTabScreen} />
-        <TopTab.Screen name="Chat" component={ChatScrren} />
-        <TopTab.Screen name="Profile" component={ProfileScrren} />
-      </TopTab.Navigator>
+      <BottomTab.Navigator screenOptions={{headerShown: false}}>
+        <BottomTab.Screen name="Home" component={HomeScrren} />
+        <BottomTab.Screen name="Cart" component={CartScrren} />
+        <BottomTab.Screen name="Profile" component={ProfileScrren} />
+      </BottomTab.Navigator>
     </NavigationContainer>
   );
 };
 export default App;
 
-function BottomTabScreen() {
-  return (
-    <BottomTab.Navigator screenOptions={{headerShown: false}}>
-      <BottomTab.Screen name="Home" component={HomeScrren} />
-      <BottomTab.Screen name="Cart" component={CartScrren} />
-      <BottomTab.Screen name="Settings" component={SettingsScrren} />
-    </BottomTab.Navigator>
-  );
-}
+// function TopTabScreen() {
+//   return (
+//     <TopTab.Navigator>
+//       <TopTab.Screen name="Home" component={HomeScrren} />
+//       <TopTab.Screen name="Chat" component={ChatScrren} />
+//       <TopTab.Screen name="Settings" component={SettingsScrren} />
+//     </TopTab.Navigator>
+//   );
+// }
 
 // function StackNavigatorScreen() {
 //   return (

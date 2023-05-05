@@ -34,17 +34,12 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
   },
   componet_b_Text_body: {
-    flexDirection: "row",
-    height: 30,
+    // flexDirection: "row",
+    // height: 30,
   },
-  componet_b_Text: {
-    borderWidth: 1,
-    margin: "1%",
-    borderRadius: 20,
-    padding: "1%",
+  componet_b_Text_Body: {
     color: "blue",
     backgroundColor: "#E5E4E2",
-    textAlign: "center",
   },
   searchBar: {
     borderWidth: 1,
@@ -83,19 +78,21 @@ export const styles = StyleSheet.create({
   componet_C_body_B: {
     margin: "4%",
   },
-  componet_C_body_B_I: { flex: 1, flexDirection: "row" },
+  componet_C_body_B_I: {
+    flex: 1,
+    flexDirection: "row",
+  },
   componet_C_body_B_Images: {
-    height: 200,
-    width: 150,
+    // height: 200,
+    // width: 150,
     borderRadius: 20,
     margin: "1%",
   },
   componet_C_body_B_Text: {
-    flex: 1,
-    textAlign: "center",
-    color: "#ffffff",
+    // textAlign: "center",
+    // color: "#ffffff",
     fontSize: 20,
-    fontWeight: "600",
-    marginTop: "90%",
+    // fontWeight: "600",
+    // marginTop: "90%",
   },
 });

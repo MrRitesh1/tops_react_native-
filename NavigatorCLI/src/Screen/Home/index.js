@@ -1,13 +1,12 @@
 import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {styles} from './homeCSS';
 
 const HomeScrren = ({navigation}) => {
   return (
     <View style={styles.body}>
-      <Text style={styles.bodyText}> Welcome to Home </Text>
       <TouchableOpacity
         style={styles.buttons}
         title="Go to Profile"
