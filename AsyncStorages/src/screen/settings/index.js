@@ -30,7 +30,9 @@ const Settings = ({navigation}) => {
       <Text style={[styles.text, {textAlign: 'center'}]}>
         Welcom To Settings
       </Text>
-      <Text style={styles.text}>DATA{data.name}</Text>
+      <Text style={styles.text}>Name : {data.name}</Text>
+      <Text style={styles.text}>Email : {data.email}</Text>
+      <Text style={styles.text}>Passwerd : {data.passwerd}</Text>
     </View>
   );
 };

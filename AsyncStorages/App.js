@@ -7,16 +7,16 @@ import HomeScreen from './src/screen/home';
 import SignUpScreen from './src/screen/signUp/signUp';
 import LoginScreen from './src/screen/login';
 import Settings from './src/screen/settings';
+import Welcome from './src/screen/welcome';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator
-      // screenOptions={{headerShown: false}}
-      >
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        {/* <Stack.Screen name="welcome" component={Welcome} />
         <Stack.Screen name="signUp" component={SignUpScreen} />
-        <Stack.Screen name="login" component={LoginScreen} />
+        <Stack.Screen name="login" component={LoginScreen} /> */}
         <Stack.Screen name="home" component={HomeScreen} />
         <Stack.Screen name="settings" component={Settings} />
       </Stack.Navigator>
