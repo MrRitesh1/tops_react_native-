@@ -12,7 +12,9 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import CartScrren from './src/Screen/Cart';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
+const MaterialBottomTab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 // const Drawer = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -48,6 +50,20 @@ const App = () => {
 };
 export default App;
 
+// function MaterialBottomTab() {
+//   return (
+//     <MaterialBottomTab.Navigator
+//       initialRouteName="Home"
+//       activeColor="#f0edf6"
+//       inactiveColor="#3e2465"
+//       barStyle={{paddingBottom: 5}}>
+//       <MaterialBottomTab.Screen name="Home" component={StackNavigatorScreen} />
+//       <MaterialBottomTab.Screen name="Cart" component={CartScrren} />
+//       <MaterialBottomTab.Screen name="Profile" component={ProfileScrren} />
+//     </MaterialBottomTab.Navigator>
+//   );
+// }
+
 // function TopTabScreen() {
 //   return (
 //     <TopTab.Navigator>
@@ -55,6 +71,7 @@ export default App;
 //       <TopTab.Screen name="Chat" component={ChatScrren} />
 //       <TopTab.Screen name="Settings" component={SettingsScrren} />
 //     </TopTab.Navigator>
+
 //   );
 // }
 
