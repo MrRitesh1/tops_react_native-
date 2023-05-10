@@ -25,20 +25,20 @@ const App = () => {
     <NavigationContainer>
       <BottomTab.Navigator
         screenOptions={({route}) => ({
-          // tabBarIcon: ({siza, color, focused}) => {
-          //   let iconName;
-          //   if (route.name === 'Home') {
-          //     iconName = faHome;
-          //   }
-          //   if (route.name === 'Cart') {
-          //     iconName = faSearch;
-          //   }
-          //   if (route.name === 'Profile') {
-          //     iconName = faHome;
-          //   }
-          //   siza = focused ? 30 : 30;
-          //   return <FontAwesomeIcon icon={iconName} size={siza} />;
-          // },
+          tabBarIcon: ({siza, color, focused}) => {
+            let iconName;
+            if (route.name === 'Home') {
+              iconName = faHome;
+            }
+            if (route.name === 'Cart') {
+              iconName = faSearch;
+            }
+            if (route.name === 'Profile') {
+              iconName = faHome;
+            }
+            siza = focused ? 30 : 30;
+            return <FontAwesomeIcon icon={iconName} size={siza} />;
+          },
           headerShown: false,
         })}>
         <BottomTab.Screen name="Home" component={StackNavigatorScreen} />
