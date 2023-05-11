@@ -3,7 +3,7 @@ import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import ProfileImage from '../../assets/image/profileImages/profiles.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const TopBar = props => {
+const TopHeader = props => {
   const {Navigation} = props;
   const [data, setData] = useState('');
 
@@ -22,8 +22,8 @@ const TopBar = props => {
   }, []);
   return (
     <View style={styles.main}>
-      <View style={[styles.mainTopBar, styles.shado]}>
-        <View style={[styles.mainTopBarBody, styles.shado]}>
+      <View style={[styles.mainTopHeader, styles.shado]}>
+        <View style={[styles.mainTopHeaderBody, styles.shado]}>
           {/* {console.log(Navigation)} */}
           <TouchableOpacity
             style={styles.ProfileButtons}
@@ -32,7 +32,7 @@ const TopBar = props => {
           >
             <Image source={ProfileImage} style={styles.ProfileImage} />
           </TouchableOpacity>
-          <Text style={styles.TopBarText}> {data.name}</Text>
+          <Text style={styles.TopHeaderText}> {data.name}</Text>
         </View>
       </View>
     </View>
@@ -47,12 +47,12 @@ const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#99ff99',
   },
-  mainTopBar: {
+  mainTopHeader: {
     height: 80,
     padding: 10,
     backgroundColor: '#99ff99',
   },
-  mainTopBarBody: {
+  mainTopHeaderBody: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -68,11 +68,11 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: '#000',
   },
-  TopBarText: {
+  TopHeaderText: {
     marginTop: 10,
     fontWeight: '800',
     fontSize: 23,
   },
 });
 
-export default TopBar;
+export default TopHeader;

@@ -11,7 +11,7 @@ import {
 
 import {getUserList} from '../../redux/actions';
 import {useSelector, useDispatch} from 'react-redux';
-import TopBar from '../../components/topBar';
+import TopHeader from '../../components/topHeader';
 
 const Settings = ({navigation}) => {
   const {users} = useSelector(state => state.usae);
@@ -21,8 +21,8 @@ const Settings = ({navigation}) => {
     dispacth(getUserList());
   });
   return (
-    <View>
-      <TopBar />
+    <View style={styles.main}>
+      <TopHeader />
       {/* <Text>Welcom To Settings</Text> */}
       <FlatList
         data={users}
@@ -38,5 +38,10 @@ const Settings = ({navigation}) => {
     </View>
   );
 };
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  main: {
+    // flex: 1,
+    // backgroundColor: '#99ff99',
+  },
+});
 export default Settings;

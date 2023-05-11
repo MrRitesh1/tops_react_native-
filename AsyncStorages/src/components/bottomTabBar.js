@@ -14,6 +14,7 @@ import HomeScreen from '../screen/home';
 import Chat from '../screen/chat';
 import Settings from '../screen/settings';
 import DrowerScreen from './drower';
+import TopTabs from './topTab';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -46,6 +47,7 @@ const BottomTabScreen = ({navigation}) => {
       //   headerShown: false,
       // })}
     >
+      {/* <BottomTab.Screen name="home" component={TopTabs} /> */}
       <BottomTab.Screen name="home" component={HomeScreen} />
       <BottomTab.Screen name="chat" component={Chat} />
       <BottomTab.Screen name="settings" component={Settings} />

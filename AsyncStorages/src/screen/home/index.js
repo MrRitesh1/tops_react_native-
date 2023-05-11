@@ -11,7 +11,7 @@ import {
 import {styles} from './homeCSS';
 import ProfileImage from '../../../assets/image/profileImages/profiles.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import TopBar from '../../components/topBar';
+import TopHeader from '../../components/topHeader';
 
 const HomeScreen = ({navigation}) => {
   const [data, setData] = useState('');
@@ -32,16 +32,16 @@ const HomeScreen = ({navigation}) => {
   }, []);
   return (
     <View style={styles.main}>
-      <TopBar
+      <TopHeader
       // Navigation={navigation}
       />
 
-      <View style={styles.contenBody}>
-        <View style={styles.story}>
+      <View style={styles.contenBody}></View>
+      {/* <View style={styles.story}>
           <Image source={ProfileImage} style={{height: 70, width: 70}} />
           <Text style={{textAlign: 'center'}}>Helo</Text>
-        </View>
-        {/* <FlatList
+        </View> */}
+      {/* <FlatList
         data={ProfileData}
         renderItem={({data}) => (
           <View style={styles.story}>
@@ -50,7 +50,6 @@ const HomeScreen = ({navigation}) => {
           </View>
         )}
        /> */}
-      </View>
     </View>
   );
 };
