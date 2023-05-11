@@ -46,9 +46,9 @@ const BottomTabScreen = ({navigation}) => {
       //   headerShown: false,
       // })}
     >
-      <BottomTab.Screen name="Home" component={HomeScreen} />
-      <BottomTab.Screen name="Chat" component={Chat} />
-      <BottomTab.Screen name="Settings" component={DrowerScreen} />
+      <BottomTab.Screen name="home" component={HomeScreen} />
+      <BottomTab.Screen name="chat" component={Chat} />
+      <BottomTab.Screen name="settings" component={Settings} />
     </BottomTab.Navigator>
   );
 };

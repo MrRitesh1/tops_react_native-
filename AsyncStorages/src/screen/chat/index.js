@@ -11,7 +11,7 @@ import TopBar from '../../components/topBar';
 import {setEmail, setName, setPasswerd} from '../../redux/actions';
 import {useSelector, useDispatch} from 'react-redux';
 const Chat = ({navigation}) => {
-  const {name, email, passwerd} = useSelector(state => state.user);
+  const {name, email, passwerd} = useSelector(state => state.usae);
   const dispacth = useDispatch();
   const hendalSubmit = () => {
     dispacth(setName('Ritesh'));

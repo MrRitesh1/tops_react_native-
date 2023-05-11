@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import ProfileImage from '../image/profileImages/profiles.png';
+import ProfileImage from '../../assets/image/profileImages/profiles.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const TopBar = ({navigation}) => {
+const TopBar = props => {
+  const {Navigation} = props;
   const [data, setData] = useState('');
 
   const getData = async () => {
@@ -23,10 +24,12 @@ const TopBar = ({navigation}) => {
     <View style={styles.main}>
       <View style={[styles.mainTopBar, styles.shado]}>
         <View style={[styles.mainTopBarBody, styles.shado]}>
+          {/* {console.log(Navigation)} */}
           <TouchableOpacity
             style={styles.ProfileButtons}
             title="profiles"
-            onPress={() => navigation.navigate('profiles')}>
+            // onPress={Navigation.navigate('profiles')}
+          >
             <Image source={ProfileImage} style={styles.ProfileImage} />
           </TouchableOpacity>
           <Text style={styles.TopBarText}> {data.name}</Text>

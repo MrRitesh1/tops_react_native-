@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Facebook from '../../image/signUpScreen/Facebook.png';
-import Google from '../../image/signUpScreen/google.png';
-import Instagram from '../../image/signUpScreen/instagram.png';
+import Facebook from '../../../assets/image/signUpScreen/Facebook.png';
+import Google from '../../../assets/image/signUpScreen/google.png';
+import Instagram from '../../../assets/image/signUpScreen/instagram.png';
 
 const SignUpScreen = ({navigation}) => {
   const [name, setName] = useState('');
@@ -22,9 +22,9 @@ const SignUpScreen = ({navigation}) => {
     try {
       const userData = {name, email, passwerd};
       await AsyncStorage.setItem('userData', JSON.stringify(userData));
-      navigation.navigate('login');
+      navigation.navigate('home');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   return (

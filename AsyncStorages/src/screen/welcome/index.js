@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import Images from '../../image/welcomeScreen/chatA.png';
-import ImagesA from '../../image/welcomeScreen/chat.png';
+import Images from '../../../assets/image/welcomeScreen/chatA.png';
+import ImagesA from '../../../assets/image/welcomeScreen/chat.png';
 
 const Welcome = ({navigation}) => {
   return (

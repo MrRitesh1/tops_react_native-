@@ -17,7 +17,7 @@ const LoginScreen = ({navigation}) => {
     try {
       const data = await AsyncStorage.getItem('userData');
       setData(JSON.parse(data));
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.log(error);
     }
