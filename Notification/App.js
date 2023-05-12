@@ -2,6 +2,9 @@ import React, {useEffect} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 
+// npm install --save react-native-push-notification
+// https://github.com/zo0r/react-native-push-notification
+
 const App = () => {
   const createChannel = () => {
     PushNotification.createChannel({
@@ -18,7 +21,7 @@ const App = () => {
     PushNotification.localNotification({
       channelId: 'test',
       title: 'Mr_Chat',
-      message: 'Hello ',
+      message: 'Hello , Good Morning',
     });
   };
   return (
