@@ -12,6 +12,7 @@ import {styles} from './homeCSS';
 import ProfileImage from '../../../assets/image/profileImages/profiles.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TopHeader from '../../components/topHeader';
+import TopTabs from '../../components/topTab';
 
 const HomeScreen = ({navigation}) => {
   const [data, setData] = useState('');
@@ -35,8 +36,19 @@ const HomeScreen = ({navigation}) => {
       <TopHeader
       // Navigation={navigation}
       />
-
-      <View style={styles.contenBody}></View>
+      <View style={styles.contenBody}>
+        {/* <View style={[styles.contenTab, styles.shado]}>
+          <TouchableOpacity onPress={() => navigation.navigate('chat')}>
+            <Text>Chat</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('status')}>
+            <Text>Status</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('calls')}>
+            <Text>Calls</Text>
+          </TouchableOpacity>
+        </View> */}
+      </View>
       {/* <View style={styles.story}>
           <Image source={ProfileImage} style={{height: 70, width: 70}} />
           <Text style={{textAlign: 'center'}}>Helo</Text>

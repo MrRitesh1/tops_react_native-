@@ -9,6 +9,8 @@ import Welcome from './src/screen/welcome';
 import BottomTabScreen from './src/components/bottomTabBar';
 import {Provider} from 'react-redux';
 import {Store} from './src/redux/store';
+import StatusScreen from './src/screen/status';
+import CallsScreen from './src/screen/calls';
 // import FontAwesome, { faHome ,faSearch} from 'react-native-fontawesome';
 
 const Stack = createNativeStackNavigator();

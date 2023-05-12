@@ -10,7 +10,7 @@ import {
 
 import {setEmail, setName, setPasswerd} from '../../redux/actions';
 import {useSelector, useDispatch} from 'react-redux';
-import TopHeader from '../../components/topHeader';
+
 const Chat = ({navigation}) => {
   const {name, email, passwerd} = useSelector(state => state.usae);
   const dispacth = useDispatch();
@@ -21,7 +21,6 @@ const Chat = ({navigation}) => {
   };
   return (
     <View style={styles.main}>
-      <TopHeader />
       <Text>Welcom To Chat</Text>
       <Text>
         Hwllo ,{name ? name : 'user'} - {email ? email : 'email'}
