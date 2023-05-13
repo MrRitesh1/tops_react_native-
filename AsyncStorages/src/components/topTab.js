@@ -13,7 +13,7 @@ const TopTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarLabelStyle: {fontSize: 18},
+        tabBarLabelStyle: {fontSize: 15},
         tabBarItemStyle: {width: 100},
         tabBarStyle: {backgroundColor: '#99ff99'},
       }}>

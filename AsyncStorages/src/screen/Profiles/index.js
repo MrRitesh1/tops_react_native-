@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {
-  StyleSheet,
   Text,
-  TextInput,
+  Image,
   TouchableOpacity,
   View,
+  TextInput,
+  ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {styles} from './profilesCSS';
+import I from '../../../assets/image/profileImages/happy.webp';
 const Profiles = ({navigation}) => {
   const [data, setData] = useState('');
 
@@ -26,54 +28,46 @@ const Profiles = ({navigation}) => {
     getData();
   }, []);
   return (
-    <View style={[styles.min, styles.shado]}>
-      <Text style={[styles.text, {textAlign: 'center'}]}>
-        Welcom To Profile
-      </Text>
-      <Text style={styles.text}>Name : {data.name}</Text>
-      <Text style={styles.text}>Email : {data.email}</Text>
-      <Text style={styles.text}>Passwerd : {data.passwerd}</Text>
-      <TouchableOpacity
-        style={styles.buttons}
-        title="SignOut"
-        onPress={() => navigation.navigate('signUp')}>
-        <Text style={styles.buttonsText}>SignOut</Text>
-      </TouchableOpacity>
+    <View style={styles.mainBody}>
+      <View style={[styles.min, styles.shado]}>
+        <View style={[styles.textView, styles.shado]}>
+          <Text
+            style={[
+              styles.text,
+              {
+                textAlign: 'center',
+                fontSize: 20,
+
+                fontWeight: '800',
+              },
+            ]}>
+            Edit Profile
+          </Text>
+        </View>
+        <View style={[styles.infoBody, styles.shado]}>
+          <View style={[styles.profilesBody, styles.shado]}>
+            <TouchableOpacity>
+              <Image source={I} style={styles.profilesImage} />
+            </TouchableOpacity>
+          </View>
+          <ScrollView>
+            <Text style={styles.text}>name </Text>
+            <TextInput value={data.name} style={styles.textImput} />
+            <Text style={styles.text}>email {data.email}</Text>
+            <TextInput value={data.email} style={styles.textImput} />
+            <Text style={styles.text}>passwerd {data.passwerd}</Text>
+            <TextInput value={data.passwerd} style={styles.textImput} />
+          </ScrollView>
+        </View>
+        <TouchableOpacity
+          style={[styles.buttons, styles.shado]}
+          title="SignOut"
+          onPress={() => navigation.navigate('signUp')}>
+          <Text style={styles.buttonsText}>SignOut</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  min: {
-    backgroundColor: '#fff',
-    height: '40%',
-    width: '90%',
-    justifyContent: 'center',
-    margin: '5%',
-    borderRadius: 20,
-    padding: 20,
-    // borderWidth: 0.5,
-    // borderColor: 'red',
-    // alignItems: 'center',
-  },
-  shado: {
-    shadowColor: '#2B1B17',
-    elevation: 30,
-  },
-  text: {
-    fontSize: 20,
-  },
-  buttons: {
-    margin: 10,
-    backgroundColor: '#566D7E',
-    justifyContent: 'flex-end',
-    borderRadius: 20,
-  },
-  buttonsText: {
-    color: '#fff',
-    fontSize: 20,
-    padding: 10,
-    fontWeight: '800',
-    textAlign: 'center',
-  },
-});
+
 export default Profiles;

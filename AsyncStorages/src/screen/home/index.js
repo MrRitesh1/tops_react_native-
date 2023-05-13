@@ -1,18 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  SafeAreaView,
-  FlatList,
-} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import {styles} from './homeCSS';
 import ProfileImage from '../../../assets/image/profileImages/profiles.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import TopHeader from '../../components/topHeader';
-import TopTabs from '../../components/topTab';
 
 const HomeScreen = ({navigation}) => {
   const [data, setData] = useState('');
@@ -33,35 +23,18 @@ const HomeScreen = ({navigation}) => {
   }, []);
   return (
     <View style={styles.main}>
-      <TopHeader
-      // Navigation={navigation}
-      />
-      <View style={styles.contenBody}>
-        {/* <View style={[styles.contenTab, styles.shado]}>
-          <TouchableOpacity onPress={() => navigation.navigate('chat')}>
-            <Text>Chat</Text>
+      <View style={[styles.mainTopHeader]}>
+        <View style={[styles.mainTopHeaderBody, styles.shado]}>
+          <TouchableOpacity
+            style={styles.ProfileButtons}
+            title="profiles"
+            onPress={() => navigation.navigate('profiles')}>
+            <Image source={ProfileImage} style={styles.ProfileImage} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('status')}>
-            <Text>Status</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('calls')}>
-            <Text>Calls</Text>
-          </TouchableOpacity>
-        </View> */}
+          <Text style={styles.TopHeaderText}> {data.name}</Text>
+        </View>
       </View>
-      {/* <View style={styles.story}>
-          <Image source={ProfileImage} style={{height: 70, width: 70}} />
-          <Text style={{textAlign: 'center'}}>Helo</Text>
-        </View> */}
-      {/* <FlatList
-        data={ProfileData}
-        renderItem={({data}) => (
-          <View style={styles.story}>
-             <Image source={ProfileImage} style={{height: 70, width: 70}} />
-            <Text>{data}</Text>
-          </View>
-        )}
-       /> */}
+      <View style={styles.contenBody}></View>
     </View>
   );
 };

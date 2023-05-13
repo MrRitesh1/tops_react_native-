@@ -1,42 +1,62 @@
 export const ProfileData = [
   {
     key: 1,
-    name: 'Hello1',
-    image: require('../image/profileImages/Profile.png'),
+    name: 'Jiganesh Dhakhara',
+    image: require('../../assets/image/profileImages/happy.webp'),
   },
   {
     key: 2,
-    name: 'Hello2',
-    image: require('../image/profileImages/profiles.png'),
+    name: 'Chirag Jashani',
+    image: require('../../assets/image/profileImages/pngtree.png'),
   },
   {
     key: 3,
-    name: 'Hello3',
-    image: require('../image/profileImages/Profile.png'),
+    name: 'Jay Dabhi',
+    image: require('../../assets/image/profileImages/happy.webp'),
   },
   {
     key: 4,
-    name: 'Hello4',
-    image: require('../image/profileImages/profiles.png'),
+    name: 'Doremon',
+    image: require('../../assets/image/profileImages/pngtreA.png'),
   },
   {
     key: 5,
-    name: 'Hello5',
-    image: require('../image/profileImages/Profile.png'),
+    name: 'Nobita',
+    image: require('../../assets/image/profileImages/pngtree.png'),
   },
   {
     key: 6,
-    name: 'Hello6',
-    image: require('../image/profileImages/profiles.png'),
+    name: 'Tom',
+    image: require('../../assets/image/profileImages/happy.webp'),
   },
   {
     key: 7,
-    name: 'Hello7',
-    image: require('../image/profileImages/Profile.png'),
+    name: 'Jery',
+    image: require('../../assets/image/profileImages/pngtree.png'),
   },
   {
     key: 8,
-    name: 'Hello8',
-    image: require('../image/profileImages/profiles.png'),
+    name: 'Chotabhim',
+    image: require('../../assets/image/profileImages/happy.webp'),
+  },
+  {
+    key: 9,
+    name: 'Doremon',
+    image: require('../../assets/image/profileImages/pngtree.png'),
+  },
+  {
+    key: 10,
+    name: 'Jay',
+    image: require('../../assets/image/profileImages/pngtree.png'),
+  },
+  {
+    key: 11,
+    name: 'Harsh',
+    image: require('../../assets/image/profileImages/happy.webp'),
+  },
+  {
+    key: 12,
+    name: 'Om',
+    image: require('../../assets/image/profileImages/pngtreA.png'),
   },
 ];

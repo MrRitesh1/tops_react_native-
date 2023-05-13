@@ -22,8 +22,6 @@ const Settings = ({navigation}) => {
   });
   return (
     <View style={styles.main}>
-      <TopHeader />
-      {/* <Text>Welcom To Settings</Text> */}
       <FlatList
         data={users}
         renderItem={({item}) => (
