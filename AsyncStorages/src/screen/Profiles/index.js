@@ -10,8 +10,23 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from './profilesCSS';
 import I from '../../../assets/image/profileImages/happy.webp';
+import ImagePicker, {openPicker} from 'react-native-image-crop-picker';
 const Profiles = ({navigation}) => {
   const [data, setData] = useState('');
+  const [profile, setProfile] = useState(null);
+  const imagePick = () => {
+    {
+      ImagePicker.openPicker({
+        width: 60,
+        height: 60,
+        cropping: true,
+        includeBase64: true,
+      }).then(image => {
+        console.log(image);
+        setProfile(image.path);
+      });
+    }
+  };
 
   const getData = async () => {
     try {
@@ -46,16 +61,19 @@ const Profiles = ({navigation}) => {
         </View>
         <View style={[styles.infoBody, styles.shado]}>
           <View style={[styles.profilesBody, styles.shado]}>
-            <TouchableOpacity>
-              <Image source={I} style={styles.profilesImage} />
+            <TouchableOpacity onPress={imagePick}>
+              <Image
+                source={profile ? {uri: profile} : I}
+                style={styles.profilesImage}
+              />
             </TouchableOpacity>
           </View>
           <ScrollView>
             <Text style={styles.text}>name </Text>
             <TextInput value={data.name} style={styles.textImput} />
-            <Text style={styles.text}>email {data.email}</Text>
+            <Text style={styles.text}>email </Text>
             <TextInput value={data.email} style={styles.textImput} />
-            <Text style={styles.text}>passwerd {data.passwerd}</Text>
+            <Text style={styles.text}>passwerd </Text>
             <TextInput value={data.passwerd} style={styles.textImput} />
           </ScrollView>
         </View>

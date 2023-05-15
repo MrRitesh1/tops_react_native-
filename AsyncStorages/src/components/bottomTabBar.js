@@ -8,7 +8,9 @@ import {
   SafeAreaView,
   StyleSheet,
 } from 'react-native';
-
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faHome} from '@fortawesome/free-solid-svg-icons/faHome';
+import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screen/home';
 import Chat from '../screen/chat';
@@ -21,32 +23,30 @@ const BottomTab = createBottomTabNavigator();
 const BottomTabScreen = ({navigation}) => {
   return (
     <BottomTab.Navigator
-      screenOptions={{
+      screenOptions={({route}) => ({
         headerShown: false,
         tabBarStyle: {
           // shadowColor: '#2B1B17',
           // elevation: 30,
+          fontWeight: '800',
           backgroundColor: '#99ff99',
         },
         tabBarActiveTintColor: 'red',
         tabBarInactiveTintColor: '#000',
-      }}
-      // screenOptions={({route}) => ({
-      // tabBarIcon: ({siza, color, focused}) => {
-      //   let iconName;
-      //   if (route.name === 'home') {
-      //     iconName = faHome;
-      //   }
-      //   if (route.name === 'settings') {
-      //     iconName = faSearch;
-      //   }
+        tabBarIcon: ({siza, color, focused}) => {
+          let iconName;
+          if (route.name === 'home') {
+            iconName = faHome;
+          }
+          if (route.name === 'settings') {
+            iconName = faSearch;
+          }
 
-      //   siza = focused ? 30 : 30;
-      //   return <FontAwesomeIcon icon={iconName} size={siza} />;
-      // },
-      //   headerShown: false,
-      // })}
-    >
+          siza = focused ? 30 : 30;
+          return <FontAwesomeIcon icon={iconName} size={siza} />;
+        },
+        headerShown: false,
+      })}>
       <BottomTab.Screen name="home" component={TopTabs} />
       {/* <BottomTab.Screen name="home" component={HomeScreen} /> */}
 

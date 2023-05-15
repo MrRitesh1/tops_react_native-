@@ -3,8 +3,7 @@ import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import ProfileImage from '../../assets/image/profileImages/profiles.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const TopHeader = props => {
-  const {Navigation} = props;
+const TopHeader = () => {
   const [data, setData] = useState('');
 
   const getData = async () => {
@@ -28,7 +27,7 @@ const TopHeader = props => {
           <TouchableOpacity
             style={styles.ProfileButtons}
             title="profiles"
-            // onPress={Navigation.navigate('profiles')}
+            // onPress={navigation.navigate('profiles')}
           >
             <Image source={ProfileImage} style={styles.ProfileImage} />
           </TouchableOpacity>
