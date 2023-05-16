@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
     shadowColor: '#2B1B17',
     elevation: 10,
   },
+
   main: {
     flex: 1,
     backgroundColor: '#99ff99',
