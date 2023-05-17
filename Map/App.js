@@ -1,61 +1,24 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import MapView from 'react-native-maps';
-import DropDownPicker from 'react-native-dropdown-picker';
+import {View, StyleSheet, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import MapScreen from './src/map';
+import CameraScreen from './src/camera';
+
 const App = () => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'Surat', value: 'surat', latitude: 21.1702, longitude: 72.8311},
-    {label: 'Bharuch', value: 'bharuch'},
-    {label: 'Bhavnagar', value: 'bhavnagar'},
-    {label: 'Anand', value: 'anand'},
-  ]);
+  const Tab = createBottomTabNavigator();
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <MapView
-        style={styles.mapBody}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
-      <View style={styles.contenBody}>
-        <Text>Welcome To React Native Map </Text>
-        <DropDownPicker
-          style={styles.DropDown}
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-        />
-      </View>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
+        <Tab.Screen name="map" component={MapScreen} />
+        <Tab.Screen name="camera" component={CameraScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  mapBody: {
-    flex: 2,
-    width: '100%',
-  },
-  contenBody: {
-    flex: 1,
-    margin: 10,
-    // justifyContent: 'center',
-    alignItems: 'center',
-  },
-  DropDown: {
-    marginTop: 20,
-    backgroundColor: '#d6d6c2',
-    fontSize: 20,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;

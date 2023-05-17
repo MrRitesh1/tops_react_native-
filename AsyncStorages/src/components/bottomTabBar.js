@@ -17,6 +17,7 @@ import Chat from '../screen/chat';
 import Settings from '../screen/settings';
 import DrowerScreen from './drower';
 import TopTabs from './topTab';
+import BusinessScreen from '../screen/Business Tools';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -38,6 +39,9 @@ const BottomTabScreen = ({navigation}) => {
           if (route.name === 'home') {
             iconName = faHome;
           }
+          if (route.name === 'business') {
+            iconName = faSearch;
+          }
           if (route.name === 'settings') {
             iconName = faSearch;
           }
@@ -49,7 +53,7 @@ const BottomTabScreen = ({navigation}) => {
       })}>
       <BottomTab.Screen name="home" component={TopTabs} />
       {/* <BottomTab.Screen name="home" component={HomeScreen} /> */}
-
+      <BottomTab.Screen name="business" component={BusinessScreen} />
       <BottomTab.Screen name="settings" component={Settings} />
     </BottomTab.Navigator>
   );
