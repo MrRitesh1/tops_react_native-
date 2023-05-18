@@ -9,18 +9,37 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import {useCamera} from 'react-native-camera-hooks';
+import {transformer} from '../metro.config';
 
 const CameraScreen = () => {
-  takePicture = async () => {
-    if (this.camera) {
-      const options = {quality: 0.5, base64: true};
-      const data = await this.camera.takePictureAsync(options);
-      console.log(data.uri);
+  const [{cameraRef}, {takePicture}] = useCamera(null);
+
+  const handleCopture = async () => {
+    try {
+      const data = await takePicture();
+      const filePath = data.url;
+      const nweFilePath = RNFS.ExternalDirectoryPath + '/myImage.jpg';
+      RNFS.moveFile(filePath, nweFilePath)
+        .then(() => {
+          console.log('Image ', filePath, '======>', nweFilePath);
+        })
+        .catch(err => console.log(err));
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  // takePicture = async () => {
+  //   if (this.camera) {
+  //     const options = {quality: 0.5, base64: true};
+  //     const data = await this.camera.takePictureAsync(options);
+  //     console.log(data.uri);
+  //   }
+  // };
   return (
     <View style={styles.container}>
-      <RNCamera
+      {/* <RNCamera
         ref={ref => {
           this.camera = ref;
         }}
@@ -42,19 +61,29 @@ const CameraScreen = () => {
         onGoogleVisionBarcodesDetected={({barcodes}) => {
           console.log(barcodes);
         }}
-      />
-      <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
-        <TouchableOpacity
-          onPress={this.takePicture.bind(this)}
-          style={styles.capture}>
-          <Text style={{fontSize: 14}}> SNAP </Text>
-        </TouchableOpacity>
-      </View>
+      /> */}
+      <RNCamera
+        ref={cameraRef}
+        type={RNCamera.Constants.Type.back}
+        style={styles.body}>
+        <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
+          <TouchableOpacity
+            // onPress={this.takePicture.bind(this)}
+            onPress={handleCopture}
+            style={styles.capture}>
+            <Text style={{fontSize: 14}}> SNAP </Text>
+          </TouchableOpacity>
+        </View>
+      </RNCamera>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  body: {
+    width: '100%',
+    height: '100%',
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
