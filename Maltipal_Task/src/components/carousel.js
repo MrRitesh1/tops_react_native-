@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, Image, View} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import {cartData} from '../data/carouselData';
 const CarouselBody = () => {
   const carouselRef = useRef();
 
@@ -8,25 +9,13 @@ const CarouselBody = () => {
     <View style={styles.carouselBody}>
       <Carousel
         ref={carouselRef}
-        data={[
-          {
-            title: 'Hello',
-          },
-          {
-            title: 'World',
-          },
-          {
-            title: 'Hello',
-          },
-          {
-            title: 'World',
-          },
-        ]}
+        data={cartData}
         layout={'tinder'}
         // layout={'stack'}
         // layout={'default'}
         renderItem={({item, index}) => (
           <View style={[styles.slide, styles.shado]}>
+            <Image source={item.image} style={styles.image} />
             <Text style={styles.title}>{item.title}</Text>
           </View>
         )}
@@ -40,7 +29,7 @@ const CarouselBody = () => {
 const styles = StyleSheet.create({
   shado: {
     shadowColor: '#2B1B17',
-    elevation: 30,
+    elevation: 10,
   },
   carouselBody: {
     alignItems: 'center',
@@ -51,6 +40,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '70%',
     margin: 10,
+  },
+  image: {
+    height: 200,
+    width: '100%',
+    backgroundColor: 'red',
+    borderRadius: 10,
   },
   title: {
     fontSize: 20,

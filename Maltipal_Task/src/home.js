@@ -1,13 +1,16 @@
-import React, {useRef} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import DatePickers from './components/datePicker';
 import CarouselBody from './components/carousel';
-
+import AddFile from './components/addFile';
 const HomeScreen = () => {
   return (
     <View>
-      <Text>Home Screen</Text>
-      {/* <DatePickers /> */}
+      <View style={{flexDirection: 'row'}}>
+        {/* <DatePickers /> */}
+        <AddFile />
+      </View>
+
       <CarouselBody />
     </View>
   );
