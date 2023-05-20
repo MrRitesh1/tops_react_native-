@@ -3,18 +3,21 @@ export const SET_USAR_EMAI = 'SET_USAR_EMAIL';
 export const SET_USAR_PASSWERD = 'SET_USAR_PASSWERD';
 export const SET_LIST = 'SET_LIST';
 export const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+
 export const setName = name => dispacth => {
   dispacth({
     type: SET_USAR_NAME,
     payload: name,
   });
 };
+
 export const setEmail = email => dispacth => {
   dispacth({
     type: SET_USAR_EMAI,
     payload: email,
   });
 };
+
 export const setPasswerd = passwerd => dispacth => {
   dispacth({
     type: SET_USAR_PASSWERD,
