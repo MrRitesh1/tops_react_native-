@@ -7,6 +7,7 @@ import ExampalScreen from './src/exampal';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import APIcallAxios from './src/api_call';
 import WelcomeScreen from './src/welcome';
+import LoginScreen from './src/login';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -15,6 +16,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="welcome" component={WelcomeScreen} />
+        <Stack.Screen name="login" component={LoginScreen} />
         <Stack.Screen name="home" component={BottomTab} />
       </Stack.Navigator>
     </NavigationContainer>

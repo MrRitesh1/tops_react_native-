@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 const WelcomeScreen = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('home');
+      navigation.replace('login');
     }, 5000);
   });
 
