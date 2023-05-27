@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,28 +7,54 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {auth} from '../../enviroment/config';
+const SingUpScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [passwerd, setPasswerd] = useState('');
 
-const SingUpScreen = () => {
+  const Send = () => {
+    createUserWithEmailAndPassword(auth, email, passwerd)
+      .then(user => console.log(user))
+      .catch(err => console.log(err));
+  };
   return (
     <View style={styles.main}>
       <ScrollView style={[styles.contentMainBody, styles.shado]}>
         <View style={[styles.contentHedar, styles.shado]}>
-          <Text style={{fontSize: 25, fontWeight: '700'}}>Welcome</Text>
+          <Text style={{fontSize: 25, fontWeight: '700'}}>SingUp</Text>
         </View>
         <View style={styles.contentBody}>
-          <TextInput style={styles.info} placeholder="Name" />
-          <TextInput style={styles.info} placeholder="Email ID" />
-          <TextInput style={styles.info} placeholder="Mobil Numbar" />
+          {/* <TextInput style={styles.info} placeholder="Name" /> */}
+          <TextInput
+            style={styles.info}
+            placeholder="Email ID"
+            value={email}
+            onChangeText={setEmail}
+          />
+          {/* <TextInput style={styles.info} placeholder="Mobil Numbar" />
           <TextInput style={styles.info} placeholder="DOB" />
-          <TextInput style={styles.info} placeholder="Address" />
-          <TextInput style={styles.info} placeholder="Passwerd" />
-
-          <TouchableOpacity
-            style={styles.buttons}
-            title="SignIn"
-            onPress={console.log('ok')}>
-            <Text style={styles.buttonsText}>SignIn</Text>
-          </TouchableOpacity>
+          <TextInput style={styles.info} placeholder="Address" /> */}
+          <TextInput
+            style={styles.info}
+            placeholder="Passwerd"
+            value={passwerd}
+            onChangeText={setPasswerd}
+          />
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={styles.buttons}
+              title="SignIn"
+              onPress={Send}>
+              <Text style={styles.buttonsText}>SignIn</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              title="SignIn"
+              onPress={() => navigation.navigate('login')}>
+              <Text style={styles.buttonsText}>Login</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -84,11 +110,12 @@ const styles = StyleSheet.create({
   },
   buttons: {
     backgroundColor: '#fff',
-    // flex: 0.2,
+    flex: 0.5,
     borderRadius: 20,
     // margin: 15,
+    margin: 10,
     display: 'flex',
-    marginLeft: 100,
+    // marginLeft: 10,
     width: '50%',
   },
   buttonsText: {

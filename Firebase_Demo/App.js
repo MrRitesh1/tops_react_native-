@@ -5,16 +5,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SingUpScreen from './src/screen/singUp';
 import LoginScreen from './src/screen/login';
 import HomeScreen from './src/screen/home';
-import {initializeApp} from 'firebase/app';
-import {getAnalytics} from 'firebase/analytics';
-import {firebaseConfig} from './enviroment/config';
-import {firebase} from '@react-native-firebase/auth';
+
 const Stack = createStackNavigator();
 
 const App = () => {
-  firebase.initializeApp(firebaseConfig);
-  // const app = initializeApp(firebaseConfig);
-  // const analytics = getAnalytics(app);
   return (
     <NavigationContainer>
       <Stack.Navigator>

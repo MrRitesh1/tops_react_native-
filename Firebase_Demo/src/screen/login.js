@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -6,22 +6,43 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-const LoginScreen = () => {
+import {signInWithEmailAndPassword} from 'firebase/auth';
+import {auth} from '../../enviroment/config';
+const LoginScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [passwerd, setPasswerd] = useState('');
+
+  const Login = () => {
+    signInWithEmailAndPassword(auth, email, passwerd)
+      .then(user => console.log(user))
+      .then(err => console.log(err));
+    navigation.navigate('home');
+  };
   return (
     <View style={styles.main}>
       <View style={[styles.contentMainBody, styles.shado]}>
         <View style={[styles.contentHedar, styles.shado]}>
-          <Text style={{fontSize: 25, fontWeight: '700'}}>Welcome</Text>
+          <Text style={{fontSize: 25, fontWeight: '700'}}>Login</Text>
         </View>
         <View style={styles.contentBody}>
-          <TextInput style={styles.info} placeholder="User ID" />
+          <TextInput
+            style={styles.info}
+            placeholder="User ID"
+            value={email}
+            onChangeText={setEmail}
+          />
 
-          <TextInput style={styles.info} placeholder="Passwerd" />
+          <TextInput
+            style={styles.info}
+            placeholder="Passwerd"
+            value={passwerd}
+            onChangeText={setPasswerd}
+          />
 
           <TouchableOpacity
             style={styles.buttons}
             title="Login"
-            onPress={console.log('ok')}>
+            onPress={Login}>
             <Text style={styles.buttonsText}>Login</Text>
           </TouchableOpacity>
         </View>
