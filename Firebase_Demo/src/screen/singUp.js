@@ -7,17 +7,54 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
-import {auth} from '../../enviroment/config';
+import {
+  createUserWithEmailAndPassword,
+  indexedDBLocalPersistence,
+} from 'firebase/auth';
+import {auth, db} from '../../enviroment/config';
+import {addDoc, collection, doc, setDoc} from 'firebase/firestore/lite';
 const SingUpScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
-  const [passwerd, setPasswerd] = useState('');
+  const [password, setpassword] = useState('');
+  const [fastName, setFastName] = useState('');
+  const [lastName, setLastName] = useState('');
 
-  const Send = () => {
-    createUserWithEmailAndPassword(auth, email, passwerd)
-      .then(user => console.log(user))
-      .catch(err => console.log(err));
+  const [error, setError] = useState({field: '', message: ''});
+
+  const SingUp = () => {
+    // let re = /\S+@\S+\.\S+/;
+    // let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    let loginError = {field: '', message: ''};
+    if (email === '') {
+      loginError.field = 'email';
+      loginError.message = 'required for email';
+      setError(loginError);
+    } else if (password === '') {
+      loginError.field = 'password';
+      loginError.message = 'required for password';
+      setError(loginError);
+    } else {
+      setError({field: '', message: ''});
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async ({user, index}) => {
+          console.log(user);
+          const usetCollection = collection(db, 'user');
+          const data = {
+            index: user.uid,
+            Email: user.email,
+            FastName: fastName,
+            LastName: lastName,
+          };
+
+          const addUser = await addDoc(usetCollection, data);
+          console.log('addUser ===============---->', addUser);
+          navigation.navigate('home');
+        })
+        .catch(err => console.log(err));
+    }
   };
+
   return (
     <View style={styles.main}>
       <ScrollView style={[styles.contentMainBody, styles.shado]}>
@@ -25,27 +62,46 @@ const SingUpScreen = ({navigation}) => {
           <Text style={{fontSize: 25, fontWeight: '700'}}>SingUp</Text>
         </View>
         <View style={styles.contentBody}>
-          {/* <TextInput style={styles.info} placeholder="Name" /> */}
+          <TextInput
+            style={styles.info}
+            placeholder="fastName"
+            value={fastName}
+            onChangeText={value => setFastName(value)}
+          />
+          <TextInput
+            style={styles.info}
+            placeholder="lastName"
+            value={lastName}
+            onChangeText={value => setLastName(value)}
+          />
           <TextInput
             style={styles.info}
             placeholder="Email ID"
             value={email}
-            onChangeText={setEmail}
+            onChangeText={value => setEmail(value)}
           />
+          {error.field === 'email' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
+
           {/* <TextInput style={styles.info} placeholder="Mobil Numbar" />
           <TextInput style={styles.info} placeholder="DOB" />
           <TextInput style={styles.info} placeholder="Address" /> */}
           <TextInput
             style={styles.info}
-            placeholder="Passwerd"
-            value={passwerd}
-            onChangeText={setPasswerd}
+            placeholder="password"
+            value={password}
+            onChangeText={value => setpassword(value)}
           />
+          {error.field === 'password' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
+
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               style={styles.buttons}
               title="SignIn"
-              onPress={Send}>
+              onPress={SingUp}>
               <Text style={styles.buttonsText}>SignIn</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -124,6 +180,18 @@ const styles = StyleSheet.create({
     padding: 10,
     fontWeight: '800',
     textAlign: 'center',
+  },
+  validatorText: {
+    // flex: 1,
+    color: 'red',
+    left: 170,
+    fontWeight: 'bold',
+  },
+  validator: {
+    // flex: 1,
+    color: 'green',
+    left: 20,
+    fontWeight: 'bold',
   },
 });
 

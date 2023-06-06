@@ -23,6 +23,7 @@
     "react-native": "0.71.8",
     "react-native-axios": "^0.17.1",
     "react-native-datepicker": "^1.7.2",
+    "react-native-daterange-picker": "^1.5.1",
     "react-native-document-picker": "^9.0.1",
     "react-native-gesture-handler": "^2.10.0",
     "react-native-google-pay": "^2.1.0",

@@ -1,23 +1,41 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../enviroment/config';
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [passwerd, setPasswerd] = useState('');
+  const [error, setError] = useState({field: '', message: ''});
+auth.currentUser
 
   const Login = () => {
-    signInWithEmailAndPassword(auth, email, passwerd)
-      .then(user => console.log(user))
-      .then(err => console.log(err));
-    navigation.navigate('home');
+    let loginError = {field: '', message: ''};
+    if (email === '') {
+      loginError.field = 'email';
+      loginError.message = 'required for email';
+      setError(loginError);
+    } else if (passwerd === '') {
+      loginError.field = 'passwerd';
+      loginError.message = 'required for passwerd';
+      setError(loginError);
+    } else {
+      setError({field: '', message: ''});
+      signInWithEmailAndPassword(auth, email, passwerd)
+        .then(user => {
+          handleCheck(user);
+        })
+        .catch(err => handleCheck(err));
+      navigation.navigate('home');
+    }
   };
+
   return (
     <View style={styles.main}>
       <View style={[styles.contentMainBody, styles.shado]}>
@@ -29,15 +47,21 @@ const LoginScreen = ({navigation}) => {
             style={styles.info}
             placeholder="User ID"
             value={email}
-            onChangeText={setEmail}
+            onChangeText={value => setEmail(value)}
           />
+          {error.field === 'email' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
 
           <TextInput
             style={styles.info}
             placeholder="Passwerd"
             value={passwerd}
-            onChangeText={setPasswerd}
+            onChangeText={value => setPasswerd(value)}
           />
+          {error.field === 'passwerd' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
 
           <TouchableOpacity
             style={styles.buttons}
@@ -113,6 +137,18 @@ const styles = StyleSheet.create({
     padding: 10,
     fontWeight: '800',
     textAlign: 'center',
+  },
+  validatorText: {
+    // flex: 1,
+    color: 'red',
+    left: 170,
+    fontWeight: 'bold',
+  },
+  validator: {
+    // flex: 1,
+    color: 'green',
+    left: 20,
+    fontWeight: 'bold',
   },
 });
 
