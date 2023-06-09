@@ -13,7 +13,7 @@ const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [passwerd, setPasswerd] = useState('');
   const [error, setError] = useState({field: '', message: ''});
-auth.currentUser
+  auth.currentUser;
 
   const Login = () => {
     let loginError = {field: '', message: ''};
@@ -68,6 +68,12 @@ auth.currentUser
             title="Login"
             onPress={Login}>
             <Text style={styles.buttonsText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.buttons, {margin: 20}]}
+            title="Login"
+            onPress={() => navigation.navigate('singUp')}>
+            <Text style={styles.buttonsText}>SingUp</Text>
           </TouchableOpacity>
         </View>
       </View>

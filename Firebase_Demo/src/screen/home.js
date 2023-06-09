@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   Keyboard,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -11,16 +9,30 @@ import {
   FlatList,
   Pressable,
 } from 'react-native';
-import {auth} from '../../enviroment/config';
-import {firebase} from '../../enviroment/config';
+import {
+  createUserWithEmailAndPassword,
+  indexedDBLocalPersistence,
+} from 'firebase/auth';
+import {auth, db, firebase} from '../../enviroment/config';
 import {useNavigation} from '@react-navigation/native';
-import {QuerySnapshot} from 'firebase/firestore/lite';
+import {addDoc, collection} from 'firebase/firestore/lite';
+
 const HomeScreen = () => {
   console.log('=============>', auth.currentUser);
   const [todos, setTodos] = useState([]);
   const todoRef = firebase.firestore().collection('todos');
   const [addData, setAddData] = useState('');
   const navigation = useNavigation();
+  const [error, setError] = useState({field: '', message: ''});
+
+  // const usetCollection = collection(db, 'todo');
+  // const data = {
+  //   Email: user.email,
+  //   FastName: fastName,
+  //   LastName: lastName,
+  // };
+  // const addTodos = addDoc(usetCollection, data);
+  // console.log('0000====>', addTodos);
 
   useEffect(() => {
     todoRef.orderBy('createAt', 'deac').onSnapshot(querySnapshot => {
@@ -35,6 +47,7 @@ const HomeScreen = () => {
       setTodos(todos);
     });
   }, []);
+
   const deletTodo = () => {
     todoRef
       .doc(todos.id)
@@ -66,73 +79,49 @@ const HomeScreen = () => {
     }
   };
   return (
-    <ScrollView style={{flex: 1}}>
-      <View style={styles.main}>
-        {/* <StatusBar style="auto" /> */}
-        <FlatList
-          data={todos}
-          numColumns={1}
-          renderItem={({item}) => (
-            <View>
-              <Pressable
-                style={styles.container}
-                onPress={() => navigation.navigate('Detail', {item})}>
-                <View style={styles.innerContainer}>
-                  <Text style={styles.itemHeading}>
-                    {' '}
-                    {item.heading[0].toUpperCase() + item.heading.slice(1)}
-                  </Text>
-                </View>
-              </Pressable>
-            </View>
-          )}
-        />
-        {/* <View
-          style={{
-            backgroundColor: '#fff',
-            flex: 1,
-            width: '96%',
-            borderRadius: 10,
-            marginTop: 10,
-            padding: 10,
-          }}>
-          <View style={styles.cart}>
-            <Text style={{fontSize: 20}}>Hello</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: 90,
-              }}>
+    // <ScrollView style={{flex: 1}}>
+    <View style={styles.main}>
+      {/* <StatusBar style="auto" /> */}
+      <FlatList
+        data={todos}
+        numColumns={1}
+        renderItem={({item}) => (
+          <View>
+            <Pressable
+              style={styles.container}
+              onPress={() => navigation.navigate('detail', {item})}>
               <TouchableOpacity
-                style={[styles.button, {backgroundColor: 'green'}]}>
-                <Text style={styles.buttonText}>U</Text>
+                style={styles.deleteButton}
+                onPress={() => deletTodo(item)}>
+                <Text style={{fontSize: 20, fontWeight: '900'}}>X</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, {backgroundColor: 'red'}]}>
-                <Text style={styles.buttonText}>C</Text>
-              </TouchableOpacity>
-            </View>
+              <View style={styles.innerContainer}>
+                <Text style={styles.itemHeading}>
+                  {item.heading[0].toUpperCase() + item.heading.slice(1)}
+                </Text>
+              </View>
+            </Pressable>
           </View>
-        </View> */}
-        <View style={[styles.contnenBody, styles.shado]}>
-          <TextInput
-            placeholder="Enter Your Task"
-            value={addData}
-            onChangeText={heading => setAddData(heading)}
-            style={styles.inputText}
-            autoCapitalize="none"
-            underlineColorAndroid="transparent"
-          />
-          <TouchableOpacity style={styles.addButon} onPress={addTodo}>
-            <Text
-              style={{fontSize: 20, justifyContent: 'center', color: '#fff'}}>
-              Add
-            </Text>
-          </TouchableOpacity>
-        </View>
+        )}
+      />
+
+      <View style={[styles.contnenBody, styles.shado]}>
+        <TextInput
+          placeholder="Enter Your Task"
+          onChangeText={heading => setAddData(heading)}
+          style={styles.inputText}
+          value={addData}
+          autoCapitalize="none"
+          underlineColorAndroid="transparent"
+        />
+        <TouchableOpacity style={styles.addButon} onPress={addTodo}>
+          <Text style={{fontSize: 20, justifyContent: 'center', color: '#fff'}}>
+            Add
+          </Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
+    // </ScrollView>
   );
 };
 
@@ -212,6 +201,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginRight: 22,
     fontWeight: 'bold',
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    height: 30,
+    width: 30,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

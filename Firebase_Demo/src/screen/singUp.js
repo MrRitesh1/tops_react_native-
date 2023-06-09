@@ -41,7 +41,6 @@ const SingUpScreen = ({navigation}) => {
           console.log(user);
           const usetCollection = collection(db, 'user');
           const data = {
-            index: user.uid,
             Email: user.email,
             FastName: fastName,
             LastName: lastName,

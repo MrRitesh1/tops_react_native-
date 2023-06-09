@@ -29,6 +29,7 @@ export const Detail = ({route}) => {
       <TextInput
         style={styles.textField}
         value={textHeading}
+        onChangeText={onChangeHeadingText}
         placeholder="Update Todo"
       />
       <Pressable
