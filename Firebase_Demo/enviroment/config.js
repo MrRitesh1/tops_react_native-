@@ -1,9 +1,7 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-import {initializeApp} from 'firebase/app';
-import {getAuth} from 'firebase/auth';
-import {getFirestore} from 'firebase/firestore/lite';
+import * as firebase from 'firebase';
+import '@firebase/auth';
+import '@firebase/firestore';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyD7j6K_QX1cK-h6H-yv-aFoDdRHFV4Sox4',
   authDomain: 'optical-wall-387009.firebaseapp.com',
@@ -14,11 +12,9 @@ const firebaseConfig = {
   measurementId: 'G-PL1M21SQQC',
 };
 
-const app = initializeApp(firebaseConfig);
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-export const auth = getAuth(app);
-
-export const db = getFirestore(app);
+// if (!firebase.apps.length) {
+//   console.log('girebase ==>');
+//   firebase.initializeApp(firebaseConfig);
+// }
+firebase.initializeApp(firebaseConfig);
 export {firebase};

@@ -10,7 +10,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from './profilesCSS';
 import I from '../../../assets/image/profileImages/happy.webp';
-import ImagePicker, {openPicker} from 'react-native-image-crop-picker';
+import {ImagePicker, openPicker} from 'react-native-image-crop-picker';
 const Profiles = ({navigation}) => {
   const [data, setData] = useState('');
   const [profile, setProfile] = useState(null);

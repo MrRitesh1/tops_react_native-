@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {
-  createUserWithEmailAndPassword,
-  indexedDBLocalPersistence,
-} from 'firebase/auth';
-import {auth, db} from '../../enviroment/config';
-import {addDoc, collection, doc, setDoc} from 'firebase/firestore/lite';
+// import {
+//   createUserWithEmailAndPassword,
+//   indexedDBLocalPersistence,
+// } from 'firebase/auth';
+import {firebase} from '../../enviroment/config';
+// import {addDoc, collection, doc, setDoc} from 'firebase/firestore/lite';
 const SingUpScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
@@ -21,38 +21,67 @@ const SingUpScreen = ({navigation}) => {
 
   const [error, setError] = useState({field: '', message: ''});
 
-  const SingUp = () => {
-    // let re = /\S+@\S+\.\S+/;
-    // let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-    let loginError = {field: '', message: ''};
-    if (email === '') {
-      loginError.field = 'email';
-      loginError.message = 'required for email';
-      setError(loginError);
-    } else if (password === '') {
-      loginError.field = 'password';
-      loginError.message = 'required for password';
-      setError(loginError);
-    } else {
-      setError({field: '', message: ''});
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(async ({user, index}) => {
-          console.log(user);
-          const usetCollection = collection(db, 'user');
+  useEffect(() => {
+    if (firebase) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword('mridul@gmail.com', 'password')
+        .then(response => {
+          const uid = response.user.uid;
           const data = {
-            Email: user.email,
-            FastName: fastName,
-            LastName: lastName,
+            id: uid,
+            email: 'mridul@gmail.com',
+            fullName: 'Mridul',
           };
-
-          const addUser = await addDoc(usetCollection, data);
-          console.log('addUser ===============---->', addUser);
-          navigation.navigate('home');
+          const usersRef = firebase.firestore().collection('users');
+          usersRef
+            .doc(uid)
+            .set(data)
+            .then(() => {
+              navigation.navigate('Home', {user: data});
+            })
+            .catch(error => {
+              alert(error);
+            });
         })
-        .catch(err => console.log(err));
+        .catch(error => {
+          alert(error);
+        });
     }
-  };
+  }, []);
+
+  //   const SingUp = () => {
+  //     // let re = /\S+@\S+\.\S+/;
+  //     // let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  //   //   let loginError = {field: '', message: ''};
+  //   //   if (email === '') {
+  //   //     loginError.field = 'email';
+  //   //     loginError.message = 'required for email';
+  //   //     setError(loginError);
+  //   //   } else if (password === '') {
+  //   //     loginError.field = 'password';
+  //   //     loginError.message = 'required for password';
+  //   //     setError(loginError);
+  //   //   } else {
+  //   //     setError({field: '', message: ''});
+  //   //     createUserWithEmailAndPassword(auth, email, password)
+  //   //       .then(async ({user, index}) => {
+  //   //         console.log(user);
+  //   //         const usetCollection = collection(db, 'user');
+  //   //         const data = {
+  //   //           Email: user.email,
+  //   //           FastName: fastName,
+  //   //           LastName: lastName,
+  //   //         };
+
+  //   //         const addUser = await addDoc(usetCollection, data);
+  //   //         console.log('addUser ===============---->', addUser);
+  //   //         navigation.navigate('home');
+  //   //       })
+  //   //       .catch(err => console.log(err));
+  //   //   }
+  //   // };
 
   return (
     <View style={styles.main}>
@@ -100,7 +129,8 @@ const SingUpScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.buttons}
               title="SignIn"
-              onPress={SingUp}>
+              // onPress={SingUp}
+            >
               <Text style={styles.buttonsText}>SignIn</Text>
             </TouchableOpacity>
             <TouchableOpacity

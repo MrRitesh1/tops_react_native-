@@ -52,9 +52,6 @@ export const SignUpScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-        {/* <TouchableOpacity style={{alignItems: 'flex-end'}}>
-          <Text>Already have an account ? </Text>
-        </TouchableOpacity> */}
       </ScrollView>
     </View>
   );
