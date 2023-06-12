@@ -22,7 +22,11 @@ export const SignUpScreen = ({navigation}) => {
           marginBottom: 5,
         }}
       />
-      <ScrollView>
+      <ScrollView
+        style={[
+          styles.shado,
+          {backgroundColor: '#fff', borderRadius: 20, marginBottom: 40},
+        ]}>
         <View style={styles.contenBody}>
           <Text style={{fontSize: 25, fontWeight: '900', marginBottom: 20}}>
             Sign-Up

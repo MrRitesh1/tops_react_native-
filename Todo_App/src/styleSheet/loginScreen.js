@@ -60,11 +60,15 @@ export const styles = StyleSheet.create({
   },
   contenBody: {
     flex: 1,
-    backgroundColor: '#DCB4F3',
+    // backgroundColor: '#DCB4F3',
     padding: 20,
     // paddingTop: 30,
     borderRadius: 20,
     justifyContent: 'center',
+  },
+  shado: {
+    shadowColor: '#2B1B17',
+    elevation: 8,
   },
   inputContnenar: {
     backgroundColor: '#fff',
