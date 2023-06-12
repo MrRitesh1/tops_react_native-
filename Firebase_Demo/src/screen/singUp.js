@@ -21,67 +21,67 @@ const SingUpScreen = ({navigation}) => {
 
   const [error, setError] = useState({field: '', message: ''});
 
-  useEffect(() => {
-    if (firebase) {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword('mridul@gmail.com', 'password')
-        .then(response => {
-          const uid = response.user.uid;
-          const data = {
-            id: uid,
-            email: 'mridul@gmail.com',
-            fullName: 'Mridul',
-          };
-          const usersRef = firebase.firestore().collection('users');
-          usersRef
-            .doc(uid)
-            .set(data)
-            .then(() => {
-              navigation.navigate('Home', {user: data});
-            })
-            .catch(error => {
-              alert(error);
-            });
-        })
-        .catch(error => {
-          alert(error);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (firebase) {
+  //     firebase
+  //       .auth()
+  //       .createUserWithEmailAndPassword('mridul@gmail.com', 'password')
+  //       .then(response => {
+  //         const uid = response.user.uid;
+  //         const data = {
+  //           id: uid,
+  //           email: 'mridul@gmail.com',
+  //           fullName: 'Mridul',
+  //         };
+  //         const usersRef = firebase.firestore().collection('users');
+  //         usersRef
+  //           .doc(uid)
+  //           .set(data)
+  //           .then(() => {
+  //             navigation.navigate('Home', {user: data});
+  //           })
+  //           .catch(error => {
+  //             alert(error);
+  //           });
+  //       })
+  //       .catch(error => {
+  //         alert(error);
+  //       });
+  //   }
+  // }, []);
 
-  //   const SingUp = () => {
-  //     // let re = /\S+@\S+\.\S+/;
-  //     // let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const SingUp = () => {
+      // let re = /\S+@\S+\.\S+/;
+      // let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  //   //   let loginError = {field: '', message: ''};
-  //   //   if (email === '') {
-  //   //     loginError.field = 'email';
-  //   //     loginError.message = 'required for email';
-  //   //     setError(loginError);
-  //   //   } else if (password === '') {
-  //   //     loginError.field = 'password';
-  //   //     loginError.message = 'required for password';
-  //   //     setError(loginError);
-  //   //   } else {
-  //   //     setError({field: '', message: ''});
-  //   //     createUserWithEmailAndPassword(auth, email, password)
-  //   //       .then(async ({user, index}) => {
-  //   //         console.log(user);
-  //   //         const usetCollection = collection(db, 'user');
-  //   //         const data = {
-  //   //           Email: user.email,
-  //   //           FastName: fastName,
-  //   //           LastName: lastName,
-  //   //         };
+      let loginError = {field: '', message: ''};
+      if (email === '') {
+        loginError.field = 'email';
+        loginError.message = 'required for email';
+        setError(loginError);
+      } else if (password === '') {
+        loginError.field = 'password';
+        loginError.message = 'required for password';
+        setError(loginError);
+      } else {
+        setError({field: '', message: ''});
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(async ({user, index}) => {
+            console.log(user);
+            const usetCollection = collection(db, 'user');
+            const data = {
+              Email: user.email,
+              FastName: fastName,
+              LastName: lastName,
+            };
 
-  //   //         const addUser = await addDoc(usetCollection, data);
-  //   //         console.log('addUser ===============---->', addUser);
-  //   //         navigation.navigate('home');
-  //   //       })
-  //   //       .catch(err => console.log(err));
-  //   //   }
-  //   // };
+            const addUser = await addDoc(usetCollection, data);
+            console.log('addUser ===============---->', addUser);
+            navigation.navigate('home');
+          })
+          .catch(err => console.log(err));
+      }
+    };
 
   return (
     <View style={styles.main}>
