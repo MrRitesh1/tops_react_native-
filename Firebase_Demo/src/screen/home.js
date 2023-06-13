@@ -25,14 +25,14 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [error, setError] = useState({field: '', message: ''});
 
-  // const usetCollection = collection(db, 'todo');
-  // const data = {
-  //   Email: user.email,
-  //   FastName: fastName,
-  //   LastName: lastName,
-  // };
-  // const addTodos = addDoc(usetCollection, data);
-  // console.log('0000====>', addTodos);
+  const usetCollection = collection(db, 'todo');
+  const data = {
+    Email: user.email,
+    FastName: fastName,
+    LastName: lastName,
+  };
+  const addTodos = addDoc(usetCollection, data);
+  console.log('0000====>', addTodos);
 
   useEffect(() => {
     todoRef.orderBy('createAt', 'deac').onSnapshot(querySnapshot => {

@@ -27,8 +27,8 @@ export const styles = StyleSheet.create({
     fontWeight: '900',
   },
   addTodoicon: {
-    height: 40,
-    width: 40,
+    height: 30,
+    width: 30,
   },
   centeredTodoView: {
     flex: 1,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
   StyleSheet,
@@ -15,13 +15,24 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {styles} from '../styleSheet/loginScreen';
 import {auth} from '../../enviroment/config';
 import {signInWithEmailAndPassword} from 'firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const LoginScreen = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [passwerd, setPasswerd] = useState('');
   const [error, setError] = useState({field: '', message: ''});
-  auth.currentUser;
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+  const getData = async id => {
+    try {
+      const data = await AsyncStorage.setItem('userData', id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const Login = () => {
     let loginError = {field: '', message: ''};
@@ -36,9 +47,10 @@ export const LoginScreen = ({navigation}) => {
     } else {
       setError({field: '', message: ''});
       signInWithEmailAndPassword(auth, email, passwerd)
-        .then(user => {
+        .then(async ({user}) => {
           console.log('login --', user);
-          // handleCheck(user);
+          // handleCheck(user)
+          getData(user.uid);
           navigation.navigate('home');
         })
         .catch(err => handleCheck(err));
@@ -110,9 +122,6 @@ export const LoginScreen = ({navigation}) => {
               onChangeText={value => setEmail(value)}
             />
           </View>
-          {error.field === 'email' && (
-            <Text style={styles.validatorText}>{error.message}</Text>
-          )}
           <View style={styles.inputContnenar}>
             <Text style={{fontSize: 18, fontWeight: '700'}}>Password</Text>
             <TextInput
@@ -122,9 +131,6 @@ export const LoginScreen = ({navigation}) => {
               onChangeText={value => setPasswerd(value)}
             />
           </View>
-          {error.field === 'passwerd' && (
-            <Text style={styles.validatorText}>{error.message}</Text>
-          )}
           <TouchableOpacity
             style={{alignItems: 'flex-end'}}
             onPress={() => setModalVisible(true)}>

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {styles} from '../styleSheet/singUpScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {addDoc, collection, doc, setDoc} from 'firebase/firestore/lite';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 import {auth, db} from '../../enviroment/config';
@@ -20,7 +21,18 @@ export const SignUpScreen = ({navigation}) => {
   const [mobile, setMobile] = useState('');
 
   const [error, setError] = useState({field: '', message: ''});
-  const SingUp = () => {
+
+  // const onSubmit = async () => {
+  //   try {
+  //     const userData = {name, email, password};
+  //     await AsyncStorage.setItem('userData', JSON.stringify(userData));
+  //     navigation.navigate('home');
+  //   } catch (error) {
+  //     // console.log(error);
+  //   }
+  // };
+
+  const SingUp = async () => {
     let loginError = {field: '', message: ''};
     if (email === '') {
       loginError.field = 'email';
@@ -65,7 +77,7 @@ export const SignUpScreen = ({navigation}) => {
       <ScrollView
         style={[
           styles.shado,
-          {backgroundColor: '#fff', borderRadius: 20, marginBottom: 40},
+          {backgroundColor: '#fff', borderRadius: 20, marginBottom: 20},
         ]}>
         <View style={styles.contenBody}>
           <Text style={{fontSize: 25, fontWeight: '900', marginBottom: 20}}>
@@ -107,6 +119,13 @@ export const SignUpScreen = ({navigation}) => {
               value={password}
               onChangeText={value => setpassword(value)}
             />
+          </View>
+          <View style={{alignItems: 'flex-end'}}>
+            <TouchableOpacity onPress={() => navigation.navigate('login')}>
+              <Text style={{color: 'green', fontWeight: '800'}}>
+                already account login{' '}
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.buttonBody}>
             <TouchableOpacity style={styles.button} onPress={SingUp}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
   View,
@@ -9,20 +9,80 @@ import {
   TouchableOpacity,
   TextInput,
   Pressable,
+  Alert,
 } from 'react-native';
 import {styles} from '../styleSheet/todoScreen';
-import {ScrollView} from 'react-native-gesture-handler';
+import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  addDoc,
+  collection,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore/lite';
+import {db} from '../../enviroment/config';
 
 export const TodoScreen = () => {
   const [addValue, setAddChangeText] = useState('');
   const [todoModalVisible, setTodoModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [shwoData, setShowData] = useState('');
+
+  useEffect(() => {
+    getTodo();
+  }, []);
+
+  const addTodo = async () => {
+    const useCollection = collection(db, 'todo');
+    const data = {
+      user_id: await AsyncStorage.getItem('userData'),
+      name: addValue,
+    };
+    const addToDo = await addDoc(useCollection, data);
+    console.log('addToDo  ', addToDo);
+    setTodoModalVisible(!todoModalVisible);
+  };
+
+  const getTodo = async () => {
+    const q = query(
+      collection(db, 'todo'),
+      where('user_id', '==', await AsyncStorage.getItem('userData')),
+    );
+    const addToDo = await getDocs(q);
+    const todos = [];
+    addToDo.forEach(doc => {
+      const {name} = doc.data();
+      todos.push({
+        id: doc.id,
+        name,
+      });
+      setShowData(todos);
+      console.log(doc.id, '---------->', doc.data());
+    });
+  };
+
+  console.log('shwoData =>>', shwoData);
+
+  const onDelete = () => {
+    Alert.alert('Delete');
+  };
 
   return (
     <>
       <View style={[styles.hedarBody, styles.shado]}>
         <Text style={styles.nameText}>TO-DO</Text>
-        <TouchableOpacity onPress={() => setTodoModalVisible(true)}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#fff',
+            shadowColor: 'green',
+            padding: 5,
+            margin: 6,
+            elevation: 10,
+            borderRadius: 20,
+          }}
+          onPress={() => setTodoModalVisible(true)}>
           <Image
             source={require('../assets/images/addTodo.png')}
             style={styles.addTodoicon}
@@ -64,7 +124,7 @@ export const TodoScreen = () => {
                   <View style={styles.buttonAddBody}>
                     <Pressable
                       style={[styles.addButton, styles.buttonClose]}
-                      onPress={() => setTodoModalVisible(!todoModalVisible)}>
+                      onPress={addTodo}>
                       <Text style={styles.textStyle}>Add TO-DO</Text>
                     </Pressable>
                   </View>
@@ -91,7 +151,7 @@ export const TodoScreen = () => {
           </KeyboardAvoidingView>
         </Modal>
       </View>
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -129,18 +189,57 @@ export const TodoScreen = () => {
             </View>
           </View>
         </KeyboardAvoidingView>
-      </Modal>
-      <ScrollView style={styles.scrollView}>
-        <TouchableOpacity
-          style={[styles.contenBody, styles.shado]}
-          onPress={() => setModalVisible(true)}>
-          <Text style={{fontSize: 20, fontWeight: '900'}}>
-            Headr : Conten-Name
-          </Text>
-          <Text style={{fontSize: 16, fontWeight: '600'}}>Image : Conten</Text>
-          <Text style={{fontSize: 16, fontWeight: '600'}}>Body : Conten</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      </Modal> */}
+      <View style={styles.scrollView}>
+        <FlatList
+          data={shwoData}
+          renderItem={({item}) => {
+            return (
+              <View style={[styles.contenBody, styles.shado]}>
+                <Text style={{fontSize: 20, fontWeight: '900'}}>
+                  {item.name}
+                </Text>
+                {/* <Text style={{fontSize: 16, fontWeight: '600'}}>Body : Conten</Text> */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    margin: 5,
+                  }}>
+                  <TouchableOpacity
+                    style={{
+                      marginRight: 15,
+                      backgroundColor: '#fff',
+                      shadowColor: 'green',
+                      padding: 10,
+                      elevation: 10,
+                      borderRadius: 20,
+                    }}>
+                    <Image
+                      source={require('../assets/images/update.png')}
+                      style={{height: 20, width: 20}}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={onDelete}
+                    style={{
+                      backgroundColor: '#fff',
+                      shadowColor: 'red',
+                      padding: 10,
+                      elevation: 10,
+                      borderRadius: 20,
+                    }}>
+                    <Image
+                      source={require('../assets/images/delete.png')}
+                      style={{height: 20, width: 20}}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            );
+          }}
+        />
+      </View>
     </>
   );
 };
