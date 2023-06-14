@@ -44,6 +44,10 @@ export const styles = StyleSheet.create({
   modalTodoView: {
     padding: 10,
   },
+  text: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
   buttonAddBody: {
     // flex: 1,
     // justifyContent: 'flex-end',
@@ -52,7 +56,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addButton: {
-    width: 200,
+    width: 100,
     borderRadius: 10,
     height: 30,
     justifyContent: 'center',

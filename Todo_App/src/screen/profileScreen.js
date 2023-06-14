@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 
 import {
   View,
@@ -15,6 +15,8 @@ import {styles} from '../styleSheet/profileScreen';
 import ImagePicker from 'react-native-image-crop-picker';
 import I from '../assets/images/pngtree.png';
 import RadioGroup from 'react-native-radio-buttons-group';
+import {auth} from '../../enviroment/config';
+import {getDocs} from 'firebase/firestore/lite';
 
 export const ProfileScreen = ({navigation}) => {
   const [name, setName] = useState('');
@@ -24,6 +26,10 @@ export const ProfileScreen = ({navigation}) => {
   const [profile, setProfile] = useState(null);
   const [editProfile, setEditProfile] = useState('');
   const [selectedId, setSelectedId] = useState();
+  const [user, setUser] = useState();
+  const [shwoData, setShowData] = useState('');
+
+  useEffect(() => {}, []);
 
   const imagePick = () => {
     {
@@ -92,7 +98,7 @@ export const ProfileScreen = ({navigation}) => {
           </View>
           <View style={styles.inputContnenar}>
             <Text style={{fontSize: 18, fontWeight: '700'}}>Email</Text>
-            <Text style={styles.inputText}>JD111@email.com</Text>
+            <Text style={styles.inputText}>jiganesh@email.com</Text>
           </View>
           <View style={styles.inputContnenar}>
             <Text style={{fontSize: 18, fontWeight: '700'}}>Mobile</Text>
