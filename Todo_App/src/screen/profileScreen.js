@@ -9,21 +9,24 @@ import {
   Modal,
   KeyboardAvoidingView,
   Pressable,
+  Button,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {styles} from '../styleSheet/profileScreen';
 import ImagePicker from 'react-native-image-crop-picker';
 import I from '../assets/images/pngtree.png';
 import RadioGroup from 'react-native-radio-buttons-group';
-import {auth} from '../../enviroment/config';
-import {getDocs} from 'firebase/firestore/lite';
+import {auth, db, storage} from '../../enviroment/config';
+import {collection, getDocs, query, where} from 'firebase/firestore/lite';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage';
 
 export const ProfileScreen = ({navigation}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   // const [image,setImage]=useState(I);
   const [mobile, setMobile] = useState('');
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState();
   const [editProfile, setEditProfile] = useState('');
   const [selectedId, setSelectedId] = useState();
   const [user, setUser] = useState();
@@ -32,18 +35,52 @@ export const ProfileScreen = ({navigation}) => {
   useEffect(() => {}, []);
 
   const imagePick = () => {
-    {
-      ImagePicker.openPicker({
-        width: 60,
-        height: 60,
-        cropping: true,
-        includeBase64: true,
-      }).then(image => {
-        console.log(image);
-        setProfile(image.path);
+    ImagePicker.openPicker({
+      width: 60,
+      height: 60,
+      cropping: true,
+      includeBase64: true,
+    })
+      .then(async image => {
+        try {
+          setProfile(image);
+          const imageName = image.path.substring(
+            image.path.lastIndexOf('/') + 1,
+          );
+          const bucketFile = `image/${imageName}`;
+          const pathToFile = image.path;
+          // console.log('imageName', imageName);
+
+          await storage().ref(imageName).putFile(pathToFile);
+          const url = await storage().ref(bucketFile).getDownloadURL();
+          console.log('image url', url);
+        } catch (error) {
+          console.log(error);
+        }
+      })
+      .catch(error => {
+        console.log(error);
       });
-    }
+    //.then(image => {
+    //   setProfile(image.path);
+    //   const fileName =
+    //     image.path.split('/')[image.path.split('/').length - 1];
+    //   const imageRef = ref(storage, 'user/' + fileName);
+
+    //   const meta = {
+    //     contentType: image.mime,
+    //   };
+
+    //   uploadBytesResumable(imageRef, image.path, meta)
+    //     .then(snapshot => {
+    //       getDownloadURL(snapshot.ref)
+    //         .then(url => console.log('File available at', url))
+    //         .catch(error => console.log('URL', error));
+    //     })
+    //     .catch(err => console.log('Image', err));
+    // });
   };
+
   const radioButtons = useMemo(
     () => [
       {
@@ -150,7 +187,7 @@ export const ProfileScreen = ({navigation}) => {
                 <View style={[styles.profilesImageBody, styles.shado]}>
                   <TouchableOpacity onPress={imagePick}>
                     <Image
-                      source={profile ? {uri: profile} : I}
+                      source={{uri: profile?.path}}
                       style={styles.profilesImageSet}
                     />
                   </TouchableOpacity>

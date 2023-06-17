@@ -19,9 +19,9 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDoc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from 'firebase/firestore/lite';
 import {db} from '../../enviroment/config';
@@ -29,7 +29,7 @@ export const TodoScreen = () => {
   const [title, setTitle] = useState('');
   const [contentWriting, setContentWriting] = useState('');
   const [todoModalVisible, setTodoModalVisible] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [updetModalVisible, setUpdetModalVisible] = useState(false);
   const [shwoData, setShowData] = useState('');
 
   const addTodo = async () => {
@@ -64,6 +64,25 @@ export const TodoScreen = () => {
     });
   };
 
+  const hendaleUpdate = async id => {
+    const q = query(
+      collection(db, 'todo'),
+      where('user_id', '==', await AsyncStorage.getItem('userData')),
+    );
+    const updateTodo = await updateDoc(doc(db, 'todo', id), {
+      title: title,
+      contentWriting: contentWriting,
+    })
+      .then(() => {
+        console.log('deta Update');
+      })
+      .catch(erro => {
+        console.log(erro);
+      });
+    console.log('-----><<<<', updateTodo);
+    getTodo();
+  };
+
   const hendaleDelete = async id => {
     const q = query(
       collection(db, 'todo'),
@@ -78,10 +97,6 @@ export const TodoScreen = () => {
   }, []);
 
   console.log('shwoData =>>', shwoData);
-
-  const onDelete = () => {
-    Alert.alert('Delete');
-  };
 
   return (
     <>
@@ -248,6 +263,7 @@ export const TodoScreen = () => {
                     margin: 5,
                   }}>
                   <TouchableOpacity
+                    onPress={() => setUpdetModalVisible(true)}
                     style={{
                       marginRight: 15,
                       backgroundColor: '#fff',
@@ -276,6 +292,75 @@ export const TodoScreen = () => {
                     />
                   </TouchableOpacity>
                 </View>
+                {/* Updete Modal */}
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={updetModalVisible}>
+                  <KeyboardAvoidingView behavior={'height'} style={{flex: 1}}>
+                    <View
+                      style={{
+                        flex: 1,
+                        backgroundColor: 'rgba(20,25,40,0.7)',
+                        // justifyContent: 'flex-end',
+                        // paddingHorizontal: 15,
+                      }}>
+                      <View style={styles.centeredTodoView}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            margin: 10,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 20,
+                              fontWeight: '900',
+                            }}>
+                            TO-DO
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() =>
+                              setUpdetModalVisible(!updetModalVisible)
+                            }>
+                            <Text style={{fontWeight: '900', fontSize: 20}}>
+                              X
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                        <View style={styles.modalTodoView}>
+                          <Text style={styles.text}>Title</Text>
+                          <TextInput
+                            style={{padding: 5, borderWidth: 1, fontSize: 18}}
+                            value={title}
+                            onChangeText={text => setTitle(text)}
+                          />
+
+                          <Text style={styles.text}>Content Writing</Text>
+                          <TextInput
+                            editable
+                            multiline
+                            style={{padding: 5, borderWidth: 1, fontSize: 18}}
+                            numberOfLines={10}
+                            maxLength={500}
+                            value={contentWriting}
+                            onChangeText={text => setContentWriting(text)}
+                          />
+                          <Text style={{fontWeight: '900', textAlign: 'right'}}>
+                            500
+                          </Text>
+                          <View style={styles.buttonAddBody}>
+                            <TouchableOpacity
+                              onPress={() => hendaleUpdate(item.id)}
+                              style={[styles.addButton, styles.buttonClose]}>
+                              <Text style={styles.textStyle}>Update</Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </KeyboardAvoidingView>
+                </Modal>
               </View>
             );
           }}

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1088396706745",
+    "project_id": "notificationdemo-7a4d3",
+    "storage_bucket": "notificationdemo-7a4d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088396706745:android:e04f6fe56e9f3ff146ac68",
+        "android_client_info": {
+          "package_name": "com.firebase_notification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088396706745-afvv3fv30f7cujv39hqllg2i3oms2to3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa7FH3XcurKz8hkFT0y8kKVuI5oEu0_wo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1088396706745-afvv3fv30f7cujv39hqllg2i3oms2to3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
