@@ -20,7 +20,7 @@ export const SignUpScreen = ({navigation}) => {
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState('');
 
-  const [error, setError] = useState({field: '', message: ''});
+  const [error, setError] = useState(false, {field: '', message: ''});
 
   // const onSubmit = async () => {
   //   try {
@@ -34,7 +34,15 @@ export const SignUpScreen = ({navigation}) => {
 
   const SingUp = async () => {
     let loginError = {field: '', message: ''};
-    if (email === '') {
+    if (name === '') {
+      loginError.field = 'name';
+      loginError.message = 'required for name';
+      setError(true);
+    } else if (mobile === '') {
+      loginError.field = 'mobile';
+      loginError.message = 'required for mobile';
+      setError(loginError);
+    } else if (email === '') {
       loginError.field = 'email';
       loginError.message = 'required for email';
       setError(loginError);
@@ -85,41 +93,65 @@ export const SignUpScreen = ({navigation}) => {
           </Text>
 
           <View style={styles.inputContnenar}>
-            <Text style={{fontSize: 18, fontWeight: '700'}}>Name</Text>
+            <Text style={{fontSize: 18, fontWeight: '700', marginTop: 2}}>
+              Name
+            </Text>
             <TextInput
               style={styles.inputText}
               placeholder="name"
               value={name}
               onChangeText={value => setName(value)}
             />
+            {error && !name && (
+              <Text style={styles.error}>Enter valid name</Text>
+            )}
           </View>
           <View style={styles.inputContnenar}>
-            <Text style={{fontSize: 18, fontWeight: '700'}}>Mobile</Text>
+            <Text style={{fontSize: 18, fontWeight: '700', marginTop: 2}}>
+              Mobile
+            </Text>
             <TextInput
               style={styles.inputText}
               placeholder="mobile"
               value={mobile}
               onChangeText={value => setMobile(value)}
             />
+            {error && !mobile && (
+              <Text style={styles.error}>Enter valid mobile</Text>
+            )}
           </View>
+
           <View style={styles.inputContnenar}>
-            <Text style={{fontSize: 18, fontWeight: '700'}}>Email</Text>
+            <Text style={{fontSize: 18, fontWeight: '700', marginTop: 2}}>
+              Email
+            </Text>
             <TextInput
               style={styles.inputText}
               placeholder="Email ID"
               value={email}
               onChangeText={value => setEmail(value)}
             />
+            {error && !email && (
+              <Text style={styles.error}>Enter valid email</Text>
+            )}
           </View>
+
           <View style={styles.inputContnenar}>
-            <Text style={{fontSize: 18, fontWeight: '700'}}>Password</Text>
+            <Text style={{fontSize: 18, fontWeight: '700', marginTop: 2}}>
+              Password
+            </Text>
             <TextInput
               style={styles.inputText}
+              secureTextEntry={true}
               placeholder="password"
               value={password}
               onChangeText={value => setpassword(value)}
             />
+            {error && !password && (
+              <Text style={styles.error}>Enter valid password</Text>
+            )}
           </View>
+
           <View style={{alignItems: 'flex-end'}}>
             <TouchableOpacity onPress={() => navigation.navigate('login')}>
               <Text style={{color: 'green', fontWeight: '800'}}>

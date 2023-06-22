@@ -21,7 +21,7 @@ export const LoginScreen = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [passwerd, setPasswerd] = useState('');
-  const [error, setError] = useState({field: '', message: ''});
+  const [error, setError] = useState(false, {field: '', message: ''});
 
   // useEffect(() => {
   //   getData();
@@ -39,7 +39,7 @@ export const LoginScreen = ({navigation}) => {
     if (email === '') {
       loginError.field = 'email';
       loginError.message = 'required for email';
-      setError(loginError);
+      setError(true);
     } else if (passwerd === '') {
       loginError.field = 'passwerd';
       loginError.message = 'required for passwerd';
@@ -122,17 +122,25 @@ export const LoginScreen = ({navigation}) => {
               onChangeText={value => setEmail(value)}
             />
           </View>
+          {error && !email && (
+            <Text style={styles.error}>Enter valid email</Text>
+          )}
           <View style={styles.inputContnenar}>
             <Text style={{fontSize: 18, fontWeight: '700'}}>Password</Text>
             <TextInput
               style={styles.inputText}
+              secureTextEntry={true}
               placeholder="Passwerd"
               value={passwerd}
               onChangeText={value => setPasswerd(value)}
             />
           </View>
+          {error && !passwerd && (
+            <Text style={styles.error}>Enter valid Password</Text>
+          )}
+
           <TouchableOpacity
-            style={{alignItems: 'flex-end'}}
+            style={{alignItems: 'flex-start', marginLeft: 20}}
             onPress={() => setModalVisible(true)}>
             <Text>Forgot your password? </Text>
           </TouchableOpacity>

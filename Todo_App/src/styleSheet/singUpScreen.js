@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   },
   inputContnenar: {
     backgroundColor: '#fff',
-    height: 70,
+    height: 80,
     marginBottom: 10,
     paddingLeft: 10,
     paddingRight: 10,
@@ -63,5 +63,8 @@ export const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderColor: '#000',
+  },
+  error: {
+    color: 'red',
   },
 });

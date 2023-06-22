@@ -122,4 +122,9 @@ export const styles = StyleSheet.create({
     width: 50,
     borderColor: '#000',
   },
+  error: {
+    color: 'red',
+    textAlign: 'right',
+    marginRight: 15,
+  },
 });
