@@ -3,10 +3,13 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Header from '../common/Header';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import CostomButton from '../common/CostomButton';
+import {useDispatch} from 'react-redux';
+import {addItemToWishList} from '../redux/slices/WishlstSlices';
 
 const ProductsDetail = () => {
   const navigation = useNavigation();
   const rout = useRoute();
+  const dispath = useDispatch();
   return (
     <View style={styles.container}>
       <Header
@@ -18,7 +21,11 @@ const ProductsDetail = () => {
         }}
       />
       <Image source={{uri: rout.params.data.image}} style={styles.banner} />
-      <TouchableOpacity style={styles.wishlistBtu}>
+      <TouchableOpacity
+        style={styles.wishlistBtu}
+        onPress={() => {
+          dispath(addItemToWishList(rout.params.data));
+        }}>
         <Image
           source={require('../assets/images/heart.png')}
           style={styles.icon}
