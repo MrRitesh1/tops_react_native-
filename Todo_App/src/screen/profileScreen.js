@@ -17,7 +17,7 @@ import {styles} from '../styleSheet/profileScreen';
 import ImagePicker from 'react-native-image-crop-picker';
 import I from '../assets/images/pngtree.png';
 import RadioGroup from 'react-native-radio-buttons-group';
-import {auth, db, storage} from '../../enviroment/config';
+import {auth, db, storage, firebase} from '../../enviroment/config';
 import {
   collection,
   doc,
@@ -30,7 +30,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage';
 import {applyActionCode} from 'firebase/auth';
 import {launchImageLibrary} from 'react-native-image-picker';
-import firestore from '@react-native-firebase/firestore';
 export const ProfileScreen = ({navigation}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -44,29 +43,14 @@ export const ProfileScreen = ({navigation}) => {
 
   useEffect(() => {
     const ReaData = async () => {
-      const docRef = doc(db, 'user', auth.currentUser.uid);
-      const docSnap = await getDocs(docRef);
-
-      const userInfo = [];
-      docSnap.forEach(doc => {
-        const {name, email} = doc.data();
-        todos.push({
-          id: doc.id,
-          name,
-          email,
-        });
-        setShowData(userInfo);
-        console.log(doc.id, '---------->', doc.data());
-      });
-      // console.log('docSnap', docSnap);
-      // if (docSnap.exists()) {
-      //   setName(docSnap.data().Name);
-      //   setMobile(docSnap.data().Mobile);
-      //   setEmail(docSnap.data().Email);
-      // }
+      // const users = await firestore()
+      //   .collection('user')
+      //   .doc(await AsyncStorage.getItem('userData'))
+      //   .get();
+      // setUser(users);
     };
     ReaData();
-    console.log('name :', name);
+    console.log('userInfo', user);
   }, []);
 
   const LogOut = () => {
@@ -156,42 +140,8 @@ export const ProfileScreen = ({navigation}) => {
     launchImageLibrary({quality: 0.5}, fileobj => {
       setProfile(fileobj.path);
       const fileName = fileobj;
-      const imageRef = ref(storage, 'user/' + fileName.assets);
-      const meta = {
-        contentType: fileobj.assets,
-      };
-      console.log('url 3 -$', meta.contentType);
 
-      // uploadBytesResumable(imageRef, fileobj.path, meta)
-      //   .then(snapshot => {
-      //     getDownloadURL(snapshot.ref)
-      //       .then(url => console.log('File available at', url))
-      //       .catch(error => console.log('URL', error));
-      //   })
-      //   .catch(err => console.log('Image', err));
-
-      // const uploadTask = storage()
-      // .ref()
-      // .child(`/userprofile ${Date.now()}`)
-      // .putFile(fileobj.uri);
-      // uploadTask.on(
-      //   'state_changed',
-      //   snapshot => {
-      //     const progress =
-      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      //     // console.log('Upload is ' + progress + '% done');
-      //     if (progress == 100) Alert.alert('image uploaded');
-      //   },
-      //   error => {
-      //     Alert.alert('error image uploaded');
-      //   },
-      //   () => {
-      //     getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-      //       console.log('File available at', downloadURL);
-      //       setProfile(downloadURL);
-      //     });
-      //   },
-      // );
+      console.log('url 3 -$', fileName);
     });
   };
 

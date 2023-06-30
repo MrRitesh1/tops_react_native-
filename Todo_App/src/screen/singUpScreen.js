@@ -31,7 +31,13 @@ export const SignUpScreen = ({navigation}) => {
   //     // console.log(error);
   //   }
   // };
-
+  const getData = async id => {
+    try {
+      const data = await AsyncStorage.setItem('userData', id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const SingUp = async () => {
     let loginError = {field: '', message: ''};
     if (name === '') {
@@ -54,7 +60,7 @@ export const SignUpScreen = ({navigation}) => {
       setError({field: '', message: ''});
       createUserWithEmailAndPassword(auth, email, password)
         .then(async ({user, index}) => {
-          console.log(user);
+          console.log('userset', user);
           const usetCollection = collection(db, 'user');
           const data = {
             id: user.uid,
@@ -65,6 +71,7 @@ export const SignUpScreen = ({navigation}) => {
 
           const addUser = await addDoc(usetCollection, data);
           console.log('addUser ===============---->', addUser);
+          // getData(user);
           navigation.navigate('login');
         })
         .catch(err => console.log(err));
