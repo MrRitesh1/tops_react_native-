@@ -57,7 +57,7 @@ const Search = () => {
       </View>
       <FlatList
         data={searchedList}
-        renderItem={(item, index) => {
+        renderItem={({item, index}) => {
           return (
             <TouchableOpacity
               activeOpacity={1}
@@ -71,16 +71,15 @@ const Search = () => {
               />
               <View>
                 <Text style={styles.name}>
-                  {item.title}
-                  {/* // .length > 25
-                  //   ? item.title.substring(0, 25) + '...'
-                  //   : item.title */}
+                  {item.title.length > 25
+                    ? item.title.substring(0, 25) + '...'
+                    : item.title}
                 </Text>
-                {/* <Text style={styles.description}>
+                <Text style={styles.description}>
                   {item.description.length > 30
                     ? item.description.substring(0, 30) + '...'
                     : item.description}
-                </Text> */}
+                </Text>
                 <Text style={styles.price}>{'₹ ' + item.price}</Text>
               </View>
             </TouchableOpacity>

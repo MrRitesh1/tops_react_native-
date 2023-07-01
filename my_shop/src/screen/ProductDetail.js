@@ -1,10 +1,18 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import Header from '../common/Header';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import CostomButton from '../common/CostomButton';
 import {useDispatch} from 'react-redux';
 import {addItemToWishList} from '../redux/slices/WishlstSlices';
+import {addItemToCart} from '../redux/slices/CartSlices';
 
 const ProductsDetail = () => {
   const navigation = useNavigation();
@@ -20,35 +28,40 @@ const ProductsDetail = () => {
           navigation.goBack();
         }}
       />
-      <Image source={{uri: rout.params.data.image}} style={styles.banner} />
-      <TouchableOpacity
-        style={styles.wishlistBtu}
-        onPress={() => {
-          dispath(addItemToWishList(rout.params.data));
-        }}>
-        <Image
-          source={require('../assets/images/heart.png')}
-          style={styles.icon}
-        />
-      </TouchableOpacity>
+      <ScrollView>
+        <Image source={{uri: rout.params.data.image}} style={styles.banner} />
+        <TouchableOpacity
+          style={styles.wishlistBtu}
+          onPress={() => {
+            dispath(addItemToWishList(rout.params.data));
+          }}>
+          <Image
+            source={require('../assets/images/heart.png')}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
 
-      <View style={styles.contenBody}>
-        <Text style={styles.title}>{rout.params.data.title}</Text>
-        <View
-          style={{borderBottomWidth: 0.5, marginLeft: 20, marginRight: 20}}
-        />
-        <Text style={styles.description}>{rout.params.data.description}</Text>
-        <Text style={styles.price}>₹ {rout.params.data.price}</Text>
-        <View
-          style={{borderBottomWidth: 0.5, marginLeft: 20, marginRight: 20}}
-        />
-        <CostomButton
-          bg={'#ffff99'}
-          title={'Add To Cart'}
-          color={'#000'}
-          onClick={() => {}}
-        />
-      </View>
+        <View style={styles.contenBody}>
+          <Text style={styles.title}>{rout.params.data.title}</Text>
+          <View
+            style={{borderBottomWidth: 0.5, marginLeft: 20, marginRight: 20}}
+          />
+          <Text style={styles.description}>{rout.params.data.description}</Text>
+          <Text style={styles.price}>₹ {rout.params.data.price}</Text>
+          <View
+            style={{borderBottomWidth: 0.5, marginLeft: 20, marginRight: 20}}
+          />
+          <CostomButton
+            bg={'#ffff99'}
+            title={'Add To Cart'}
+            color={'#000'}
+            onClick={() => {
+              navigation.goBack();
+              dispath(addItemToCart(rout.params.data));
+            }}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 };
