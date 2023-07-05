@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -18,6 +18,7 @@ const ProductsDetail = () => {
   const navigation = useNavigation();
   const rout = useRoute();
   const dispath = useDispatch();
+  const [qty, setQty] = useState(1);
   return (
     <View style={styles.container}>
       <Header
@@ -27,6 +28,7 @@ const ProductsDetail = () => {
         onClickLeftIcon={() => {
           navigation.goBack();
         }}
+        isCart={true}
       />
       <ScrollView>
         <Image source={{uri: rout.params.data.image}} style={styles.banner} />
@@ -48,16 +50,48 @@ const ProductsDetail = () => {
           />
           <Text style={styles.description}>{rout.params.data.description}</Text>
           <Text style={styles.price}>₹ {rout.params.data.price}</Text>
+          <View style={styles.qtyView}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                if (qty > 1) {
+                  setQty(qty - 1);
+                }
+              }}>
+              <Text style={{fontSize: 10, fontWeight: '900'}}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.qty}>{qty}</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                setQty(qty + 1);
+              }}>
+              <Text style={{fontSize: 10, fontWeight: '900'}}>+</Text>
+            </TouchableOpacity>
+          </View>
           <View
             style={{borderBottomWidth: 0.5, marginLeft: 20, marginRight: 20}}
           />
+
           <CostomButton
             bg={'#ffff99'}
             title={'Add To Cart'}
             color={'#000'}
             onClick={() => {
-              navigation.goBack();
-              dispath(addItemToCart(rout.params.data));
+              // navigation.goBack();
+              console.log(rout.params.data);
+              dispath(
+                addItemToCart({
+                  category: rout.params.data.category,
+                  description: rout.params.data.description,
+                  id: rout.params.data.id,
+                  image: rout.params.data.image,
+                  price: rout.params.data.price,
+                  qty: qty,
+                  rating: rout.params.data.rating,
+                  title: rout.params.data.title,
+                }),
+              );
             }}
           />
         </View>
@@ -120,5 +154,22 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
+  },
+  qtyView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  button: {
+    padding: 10,
+    borderWidth: 0.5,
+    width: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginLeft: 10,
+  },
+  qty: {
+    marginLeft: 10,
+    fontSize: 20,
   },
 });

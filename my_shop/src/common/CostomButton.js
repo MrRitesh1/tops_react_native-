@@ -11,7 +11,7 @@ const CostomButton = ({bg, title, onClick, color}) => {
   return (
     <TouchableOpacity
       style={[styles.btu, {backgroundColor: bg}]}
-      activeOpacity={1}
+      // activeOpacity={1}
       onPress={() => {
         onClick();
       }}>

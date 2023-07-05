@@ -39,6 +39,7 @@ const Home = () => {
         onClickLeftIcon={() => {
           navigation.openDrawer();
         }}
+        isCart={true}
       />
       <FlatList
         data={products}

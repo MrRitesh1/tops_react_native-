@@ -20,8 +20,25 @@ const CartSlices = createSlice({
       }
       state.data = tempData;
     },
+    reduceItemFromCart(state, action) {
+      let tempData = state.data;
+      tempData.map(item => {
+        if (item.id == action.payload.id) {
+          item.qty = item.qty - 1;
+        }
+      });
+
+      state.data = tempData;
+    },
+    removeItemFromCart(state, action) {
+      let tempData = state.data;
+      tempData.splice(action.payload, 1);
+
+      state.data = tempData;
+    },
   },
 });
 
-export const {addItemToCart} = CartSlices.actions;
+export const {addItemToCart, reduceItemFromCart, removeItemFromCart} =
+  CartSlices.actions;
 export default CartSlices.reducer;
