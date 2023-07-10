@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Header from '../common/Header';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -13,12 +14,26 @@ import CostomButton from '../common/CostomButton';
 import {useDispatch} from 'react-redux';
 import {addItemToWishList} from '../redux/slices/WishlstSlices';
 import {addItemToCart} from '../redux/slices/CartSlices';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AskForLoginModule from '../common/LoginModel';
 
 const ProductsDetail = () => {
   const navigation = useNavigation();
   const rout = useRoute();
   const dispath = useDispatch();
   const [qty, setQty] = useState(1);
+  const [moduleVisible, setModuleVisible] = useState(false);
+
+  const checkUserStates = async () => {
+    let isUserLoggdIn = true;
+    const status = await AsyncStorage.getItem('IS_USER_LOOGED_IN');
+    if (status == null) {
+      isUserLoggdIn = false;
+    } else {
+      isUserLoggdIn = true;
+    }
+    return isUserLoggdIn;
+  };
   return (
     <View style={styles.container}>
       <Header
@@ -30,12 +45,17 @@ const ProductsDetail = () => {
         }}
         isCart={true}
       />
+
       <ScrollView>
         <Image source={{uri: rout.params.data.image}} style={styles.banner} />
         <TouchableOpacity
           style={styles.wishlistBtu}
           onPress={() => {
-            dispath(addItemToWishList(rout.params.data));
+            if (checkUserStates() === true) {
+              dispath(addItemToWishList(rout.params.data));
+            } else {
+              setModuleVisible(true);
+            }
           }}>
           <Image
             source={require('../assets/images/heart.png')}
@@ -49,53 +69,88 @@ const ProductsDetail = () => {
             style={{borderBottomWidth: 0.5, marginLeft: 20, marginRight: 20}}
           />
           <Text style={styles.description}>{rout.params.data.description}</Text>
-          <Text style={styles.price}>₹ {rout.params.data.price}</Text>
-          <View style={styles.qtyView}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                if (qty > 1) {
-                  setQty(qty - 1);
-                }
-              }}>
-              <Text style={{fontSize: 10, fontWeight: '900'}}>-</Text>
-            </TouchableOpacity>
-            <Text style={styles.qty}>{qty}</Text>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                setQty(qty + 1);
-              }}>
-              <Text style={{fontSize: 10, fontWeight: '900'}}>+</Text>
-            </TouchableOpacity>
-          </View>
           <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 30,
+              marginBottom: 30,
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styles.price}>₹ {rout.params.data.price}</Text>
+            <View style={styles.qtyView}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  if (qty > 1) {
+                    setQty(qty - 1);
+                  }
+                }}>
+                {/* <Text style={{fontSize: 10, fontWeight: '900'}}>-</Text> */}
+                <Image
+                  source={require('../assets/images/minus.png')}
+                  style={{width: 20, height: 40}}
+                />
+              </TouchableOpacity>
+              <Text style={[styles.qty, styles.button]}>{qty}</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  setQty(qty + 1);
+                }}>
+                {/* <Text style={{fontSize: 10, fontWeight: '900'}}>+</Text> */}
+                <Image
+                  source={require('../assets/images/plus.png')}
+                  style={{width: 20, height: 20}}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          {/* <View
             style={{borderBottomWidth: 0.5, marginLeft: 20, marginRight: 20}}
-          />
+          /> */}
 
           <CostomButton
-            bg={'#ffff99'}
+            style={{
+              shadowColor: '#2B1B17',
+              elevation: 15,
+            }}
+            bg={'#89a9f0'}
             title={'Add To Cart'}
             color={'#000'}
             onClick={() => {
-              // navigation.goBack();
-              console.log(rout.params.data);
-              dispath(
-                addItemToCart({
-                  category: rout.params.data.category,
-                  description: rout.params.data.description,
-                  id: rout.params.data.id,
-                  image: rout.params.data.image,
-                  price: rout.params.data.price,
-                  qty: qty,
-                  rating: rout.params.data.rating,
-                  title: rout.params.data.title,
-                }),
-              );
+              if (checkUserStates() === true) {
+                dispath(
+                  addItemToCart({
+                    category: rout.params.data.category,
+                    description: rout.params.data.description,
+                    id: rout.params.data.id,
+                    image: rout.params.data.image,
+                    price: rout.params.data.price,
+                    qty: qty,
+                    rating: rout.params.data.rating,
+                    title: rout.params.data.title,
+                  }),
+                );
+              } else {
+                setModuleVisible(true);
+              }
             }}
           />
         </View>
       </ScrollView>
+      <AskForLoginModule
+        moduleVisible={moduleVisible}
+        onClickLogin={() => {
+          navigation.navigate('Login');
+        }}
+        onClickSingUp={() => {
+          navigation.navigate('SignUp');
+        }}
+        onClose={() => {
+          setModuleVisible(false);
+        }}
+      />
     </View>
   );
 };
@@ -114,6 +169,8 @@ const styles = StyleSheet.create({
   },
   contenBody: {
     flex: 1,
+    padding: 5,
+    paddingBottom: 50,
     backgroundColor: '#ffffe6',
   },
   title: {
@@ -158,18 +215,33 @@ const styles = StyleSheet.create({
   qtyView: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    marginRight: 10,
+    width: 150,
+    height: 60,
+    padding: 5,
+    shadowColor: '#2B1B17',
+    elevation: 15,
+    borderRadius: 9,
   },
   button: {
-    padding: 10,
-    borderWidth: 0.5,
-    width: 30,
+    padding: 5,
+    // borderWidth: 0.5,
+    // width: 30,
+    // height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
     marginLeft: 10,
+    backgroundColor: '#fff',
+    // shadowColor: '#2B1B17',
+    // elevation: 15,
   },
+
   qty: {
     marginLeft: 10,
     fontSize: 20,
+    textAlign: 'center',
   },
 });
