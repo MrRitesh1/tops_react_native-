@@ -8,11 +8,21 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const loginUsar = () => {
+    firestore()
+      .collection('Users')
+      .where('email', '==', email)
+      // .where('password', '==', password)
+      .get()
+      .then(querySnapshot => {
+        console.log('---', querySnapshot.docs[0]._data);
+      });
+  };
   return (
     <View style={styles.mainBody}>
       <View style={styles.boxBody}>
@@ -45,7 +55,12 @@ const Login = ({navigation}) => {
               source={require('../assets/images/usera.png')}
               style={styles.icon}
             />
-            <TextInput style={styles.input} placeholder="Email" />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={tex => setEmail(tex)}
+            />
           </View>
           <View style={[styles.inputText, styles.shado]}>
             <Image
@@ -56,11 +71,15 @@ const Login = ({navigation}) => {
               style={styles.input}
               secureTextEntry={true}
               placeholder="password"
+              value={password}
+              onChangeText={tex => setPassword(tex)}
             />
           </View>
           <View style={[styles.botBodyL, styles.shado]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Main')}
+              onPress={() => {
+                loginUsar();
+              }}
               style={{flexDirection: 'row'}}>
               {/* <Image
                 source={require('../assets/images/login-.png')}

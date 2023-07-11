@@ -8,12 +8,31 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+
 const SignUp = ({navigation}) => {
   const [fullName, setFullName] = useState('');
   const [mobile, setMobile] = useState('');
-  const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const addUser = () => {
+    firestore()
+      .collection('Users')
+      .add({
+        name: fullName,
+        mobile: mobile,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+      })
+      .then(() => {
+        console.log('User added!');
+        navigation.navigate('Login');
+      });
+  };
+
   return (
     <View style={styles.mainBody}>
       <View style={styles.boxBody}>
@@ -46,7 +65,12 @@ const SignUp = ({navigation}) => {
               source={require('../assets/images/usera.png')}
               style={styles.icon}
             />
-            <TextInput style={styles.input} placeholder="full name" />
+            <TextInput
+              style={styles.input}
+              placeholder="full name"
+              value={fullName}
+              onChangeText={tex => setFullName(tex)}
+            />
           </View>
           {/* <View style={[styles.inputText, styles.shado]}>
             <Image
@@ -64,14 +88,24 @@ const SignUp = ({navigation}) => {
               source={require('../assets/images/telephone.png')}
               style={styles.icon}
             />
-            <TextInput style={styles.input} placeholder="mobile" />
+            <TextInput
+              style={styles.input}
+              placeholder="mobile"
+              value={mobile}
+              onChangeText={tex => setMobile(tex)}
+            />
           </View>
           <View style={[styles.inputText, styles.shado]}>
             <Image
               source={require('../assets/images/email.png')}
               style={styles.icon}
             />
-            <TextInput style={styles.input} placeholder="email" />
+            <TextInput
+              style={styles.input}
+              placeholder="email"
+              value={email}
+              onChangeText={tex => setEmail(tex)}
+            />
           </View>
           <View style={[styles.inputText, styles.shado]}>
             <Image
@@ -82,10 +116,28 @@ const SignUp = ({navigation}) => {
               style={styles.input}
               secureTextEntry={true}
               placeholder="password"
+              value={password}
+              onChangeText={tex => setPassword(tex)}
+            />
+          </View>
+          <View style={[styles.inputText, styles.shado]}>
+            <Image
+              source={require('../assets/images/padlock.png')}
+              style={styles.icon}
+            />
+            <TextInput
+              style={styles.input}
+              secureTextEntry={true}
+              placeholder="confirm password"
+              value={confirmPassword}
+              onChangeText={tex => setConfirmPassword(tex)}
             />
           </View>
           <View style={[styles.botBodyL, styles.shado]}>
-            <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+            <TouchableOpacity
+              onPress={() => {
+                addUser();
+              }}>
               <Text
                 style={{
                   color: '#000',

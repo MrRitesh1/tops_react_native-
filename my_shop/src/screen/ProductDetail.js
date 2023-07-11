@@ -119,22 +119,22 @@ const ProductsDetail = () => {
             title={'Add To Cart'}
             color={'#000'}
             onClick={() => {
-              if (checkUserStates() === true) {
-                dispath(
-                  addItemToCart({
-                    category: rout.params.data.category,
-                    description: rout.params.data.description,
-                    id: rout.params.data.id,
-                    image: rout.params.data.image,
-                    price: rout.params.data.price,
-                    qty: qty,
-                    rating: rout.params.data.rating,
-                    title: rout.params.data.title,
-                  }),
-                );
-              } else {
-                setModuleVisible(true);
-              }
+              // if (checkUserStates() === true) {
+              dispath(
+                addItemToCart({
+                  category: rout.params.data.category,
+                  description: rout.params.data.description,
+                  id: rout.params.data.id,
+                  image: rout.params.data.image,
+                  price: rout.params.data.price,
+                  qty: qty,
+                  rating: rout.params.data.rating,
+                  title: rout.params.data.title,
+                }),
+              );
+              // } else {
+              //   setModuleVisible(true);
+              // }
             }}
           />
         </View>
