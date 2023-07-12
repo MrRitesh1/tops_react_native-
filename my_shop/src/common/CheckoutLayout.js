@@ -13,8 +13,8 @@ const CheckoutLayout = ({total, itams}) => {
   return (
     <View style={styles.container}>
       <View style={styles.tab}>
-        <Text>{`[ Itams : ${itams} ]`}</Text>
-        <Text>{'Total : ₹ ' + total}</Text>
+        <Text style={styles.text}>{`[ Itams : ${itams} ]`}</Text>
+        <Text style={styles.text}>{'Total : ₹ ' + total}</Text>
       </View>
       <View style={styles.tab}>
         <TouchableOpacity
@@ -55,5 +55,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#89a9f0',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: '900',
   },
 });

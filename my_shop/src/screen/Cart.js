@@ -39,6 +39,10 @@ const Cart = () => {
     <View style={styles.container}>
       <Header
         title={'Cart'}
+        leftIcom={require('../assets/images/left-arrow.png')}
+        onClickLeftIcon={() => {
+          navigation.goBack();
+        }}
         //    isCart={true}
       />
       <FlatList
@@ -57,8 +61,8 @@ const Cart = () => {
               />
               <View>
                 <Text style={styles.name}>
-                  {item.title.length > 25
-                    ? item.title.substring(0, 25) + '...'
+                  {item.title.length > 20
+                    ? item.title.substring(0, 20) + '...'
                     : item.title}
                 </Text>
                 <Text style={styles.description}>
@@ -112,12 +116,17 @@ const styles = StyleSheet.create({
     borderBlockColor: '#fff',
   },
   productsItem: {
-    width: Dimensions.get('window').width,
-    height: 100,
-    marginTop: 10,
+    // width: Dimensions.get('window').width,
+    height: 120,
     alignItems: 'center',
     backgroundColor: '#fff',
     flexDirection: 'row',
+    shadowColor: '#2B1B17',
+    elevation: 10,
+    margin: 10,
+    borderRadius: 10,
+    padding: 10,
+    paddingBottom: 20,
   },
   name: {
     fontSize: 20,

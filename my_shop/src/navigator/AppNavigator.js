@@ -8,6 +8,8 @@ import Login from '../screen/Login';
 import SignUp from '../screen/SignUp';
 import Welcome from '../screen/Welcome';
 import Checkouts from '../screen/Checkouts';
+import Address from '../screen/Address';
+import AddAddress from '../screen/AddAddress';
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -48,6 +50,16 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Checkouts"
           component={Checkouts}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Address"
+          component={Address}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="AddAddress"
+          component={AddAddress}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

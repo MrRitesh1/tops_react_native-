@@ -8,8 +8,10 @@ import {
   ScrollView,
 } from 'react-native';
 import Header from '../../common/Header';
+import {useNavigation} from '@react-navigation/native';
 
-const User = ({navigation}) => {
+const User = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Header title={'Profile'} />
@@ -28,7 +30,9 @@ const User = ({navigation}) => {
       <TouchableOpacity style={[styles.tab, {marginTop: 20}]}>
         <Text style={styles.btnText}>Orders</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.tab, {marginTop: 20}]}>
+      <TouchableOpacity
+        style={[styles.tab, {marginTop: 20}]}
+        onPress={() => navigation.navigate('Address')}>
         <Text style={styles.btnText}>Address</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.tab, {marginTop: 20}]}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,10 +9,82 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '297241921213-963mpdb3rn3lpctfrr7i5gncrpcohqs8.apps.googleusercontent.com',
+      offlineAccess: true,
+      forceCodeForRefreshToken: true,
+    });
+    isSignedIn();
+  }, []);
+
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log('due----', userInfo);
+      setUser(userInfo);
+    } catch (error) {
+      console.log('Messs_____', error.message);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('User Cancelesd the Login Flow');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('Siging In');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log(' play services not available or outdated');
+      } else {
+        console.log('some other error happened');
+      }
+    }
+  };
+
+  const isSignedIn = async () => {
+    const isSignedIn = await GoogleSignin.isSignedIn();
+    if (!!isSignedIn) {
+      getCurrentUserInfo();
+    } else {
+      console.log('Please Login');
+    }
+  };
+
+  const getCurrentUserInfo = async () => {
+    try {
+      const userInfo = await GoogleSignin.signInSilently();
+      console.log('eddet =====', user);
+      setUser(userInfo);
+    } catch (error) {
+      console.log('Messs_____', error.message);
+      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+        alert('User has not signed in yest');
+        console.log('User Cancelesd the Login Flow');
+      } else {
+        alert('User has not signed in yet');
+
+        console.log('someething error wrong');
+      }
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      setUser({});
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const loginUsar = () => {
     firestore()
       .collection('Users')
@@ -108,7 +180,19 @@ const Login = ({navigation}) => {
           </Text>
           <View
             style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-            <TouchableOpacity
+            {!user.idToken ? (
+              <GoogleSigninButton
+                style={{width: 192, height: 48}}
+                size={GoogleSigninButton.Size.width}
+                color={GoogleSigninButton.Color.Dark}
+                onPress={signIn}
+              />
+            ) : (
+              <TouchableOpacity onPress={signOut}>
+                <Text>SignOut</Text>
+              </TouchableOpacity>
+            )}
+            {/* <TouchableOpacity
               style={[
                 styles.shado,
                 {
@@ -121,9 +205,9 @@ const Login = ({navigation}) => {
                 source={require('../assets/images/google.png')}
                 style={{height: 50, width: 50, margin: 10}}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={[
                 styles.shado,
                 {
@@ -137,7 +221,7 @@ const Login = ({navigation}) => {
                 source={require('../assets/images/facebook.png')}
                 style={{height: 50, width: 50, margin: 10}}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             {/* <TouchableOpacity>
               <Image

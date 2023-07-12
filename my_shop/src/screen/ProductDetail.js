@@ -58,7 +58,7 @@ const ProductsDetail = () => {
             }
           }}>
           <Image
-            source={require('../assets/images/heart.png')}
+            source={require('../assets/images/love.png')}
             style={styles.icon}
           />
         </TouchableOpacity>
@@ -77,7 +77,13 @@ const ProductsDetail = () => {
               marginBottom: 30,
               justifyContent: 'space-between',
             }}>
-            <Text style={styles.price}>₹ {rout.params.data.price}</Text>
+            <View
+              style={[
+                styles.qtyView,
+                {marginLeft: 10, padding: 0, paddingBottom: 5},
+              ]}>
+              <Text style={styles.price}>₹ {rout.params.data.price}</Text>
+            </View>
             <View style={styles.qtyView}>
               <TouchableOpacity
                 style={styles.button}
@@ -189,28 +195,30 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   price: {
-    marginTop: 20,
+    // marginTop: 20,
     marginLeft: 20,
     marginRight: 30,
     textAlign: 'right',
-    color: 'green',
+    color: '#6583f0',
     fontSize: 25,
     fontWeight: '900',
   },
   wishlistBtu: {
     position: 'absolute',
-    right: 10,
-    top: 225,
-    backgroundColor: '#d6d6c2',
+    right: 20,
+    top: 160,
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     width: 50,
     height: 50,
     borderRadius: 80 / 2,
+    shadowColor: '#2B1B17',
+    elevation: 15,
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 30,
+    height: 30,
   },
   qtyView: {
     flexDirection: 'row',
@@ -218,7 +226,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#fff',
     marginRight: 10,
-    width: 150,
+    width: '45%',
     height: 60,
     padding: 5,
     shadowColor: '#2B1B17',
