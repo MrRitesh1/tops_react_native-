@@ -10,13 +10,14 @@ import {
   Image,
 } from 'react-native';
 import Header from '../common/Header';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Address = ({navigation}) => {
   const addressList = useSelector(state => state.address);
   const isFocused = useIsFocused();
+  const dispath = useDispatch();
   useEffect(() => {
     console.log('AddressList', addressList);
   }, [isFocused]);
@@ -51,7 +52,7 @@ const Address = ({navigation}) => {
 
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('AddAddress');
+          navigation.navigate('AddAddress', {type: 'new'});
         }}>
         <Image
           source={require('../assets/images/contact.png')}
@@ -84,13 +85,22 @@ const Address = ({navigation}) => {
                       marginBottom: 10,
                       flexDirection: 'row',
                     }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('AddAddress', {
+                          type: 'edit',
+                          data: item,
+                        });
+                      }}>
                       <Image
                         source={require('../assets/images/pen.png')}
                         style={styles.icon}
                       />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        dispath(defaulAddress(item.id));
+                      }}>
                       <Image
                         source={require('../assets/images/delet.png')}
                         style={styles.icon}

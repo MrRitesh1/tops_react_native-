@@ -9,23 +9,42 @@ import {
 } from 'react-native';
 import Header from '../common/Header';
 import {useDispatch} from 'react-redux';
-import {addAddress} from '../redux/slices/AddressSlice';
+import {addAddress, updateAddress} from '../redux/slices/AddressSlice';
+import uuid from 'react-native-uuid';
+import {useRoute} from '@react-navigation/native';
 
 const AddAddress = ({navigation}) => {
-  const [type, setType] = useState(0);
-  const [state, setState] = useState('');
-  const [country, setCountry] = useState('');
-  const [address_1, setAddress_1] = useState('');
-  const [city, setCity] = useState('');
-  const [pincode, setPincode] = useState('');
+  const route = useRoute();
 
+  const [type, setType] = useState(
+    route.params.type == 'edit'
+      ? route.params.data.state == 'Home'
+        ? 0
+        : 1
+      : 0,
+  );
+  const [state, setState] = useState(
+    route.params.type == 'edit' ? route.params.data.state : '',
+  );
+  const [country, setCountry] = useState(
+    route.params.type == 'edit' ? route.params.data.country : '',
+  );
+  const [address_1, setAddress_1] = useState(
+    route.params.type == 'edit' ? route.params.data.address_1 : '',
+  );
+  const [city, setCity] = useState(
+    route.params.type == 'edit' ? route.params.data.city : '',
+  );
+  const [pincode, setPincode] = useState(
+    route.params.type == 'edit' ? route.params.data.pincode : '',
+  );
   const dispath = useDispatch();
 
   return (
     <View>
       <Header
         leftIcom={require('../assets/images/left-arrow.png')}
-        title={'Add Address'}
+        title={route.params.type == 'edit' ? 'Edit Address' : 'Add New Address'}
         onClickLeftIcon={() => {
           navigation.goBack();
         }}
@@ -142,17 +161,33 @@ const AddAddress = ({navigation}) => {
         <TouchableOpacity
           style={[styles.btn, styles.shado]}
           onPress={() => {
-            dispath(
-              addAddress({
-                address_1: address_1,
-                city: city,
-                pincode: pincode,
-                state: state,
-                country: country,
-                type: type == 1 ? 'HOME' : 'OFFICE',
-              }),
-              navigation.goBack(),
-            );
+            if (route.params.type == 'edit') {
+              dispath(
+                updateAddress({
+                  address_1: address_1,
+                  city: city,
+                  pincode: pincode,
+                  state: state,
+                  country: country,
+                  type: type == 1 ? 'HOME' : 'OFFICE',
+                  id: route.params.data.id,
+                }),
+                navigation.goBack(),
+              );
+            } else {
+              dispath(
+                addAddress({
+                  address_1: address_1,
+                  city: city,
+                  pincode: pincode,
+                  state: state,
+                  country: country,
+                  type: type == 1 ? 'HOME' : 'OFFICE',
+                  id: uuid.v4(),
+                }),
+                navigation.goBack(),
+              );
+            }
           }}>
           <Text style={{fontSize: 23, fontWeight: '900', color: '#000'}}>
             Seva Address
