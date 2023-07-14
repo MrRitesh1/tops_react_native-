@@ -14,12 +14,14 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   addItemToCart,
+  emptyCart,
   reduceItemFromCart,
   removeItemFromCart,
 } from '../redux/slices/CartSlices';
 import CostomButton from '../common/CostomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RazorpayCheckout from 'react-native-razorpay';
+import {orderItem} from '../redux/slices/OrderSlices';
 const Checkouts = () => {
   const navigation = useNavigation();
   const items = useSelector(state => state.cart);
@@ -47,6 +49,53 @@ const Checkouts = () => {
 
   const getSelectedAddress = async () => {
     setSelectedAddress(await AsyncStorage.getItem('MY_ADDRESS'));
+  };
+
+  const orderPlace = paymentId => {
+    const day = new Date().getDate();
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear();
+    const hours = new Date().getHours();
+    const minutes = new Date().getMinutes();
+    console.log();
+    const data = {
+      items: cartItem,
+      amount: '₹ ' + getTotal(),
+      address: selectedAddress,
+      paymentId: paymentId,
+      paymentStatus: selectedMethod == 3 ? 'Pending' : 'Success',
+      createdAt:
+        day + '/' + month + '/' + year + ' :: ' + hours + ' : ' + minutes,
+    };
+
+    dispatch(orderItem(data));
+    dispatch(emptyCart([]));
+
+    navigation.navigate('OrderSuccess');
+  };
+  const payNow = () => {
+    var options = {
+      description: 'Credits towards consultation',
+      image: 'https://i.imgur.com/3g7nmJC.png',
+      currency: 'INR',
+      key: 'rzp_test_hKEvVbnoGv26xA', // Your api key
+      amount: getTotal() * 100,
+      name: 'Pay',
+      prefill: {
+        email: 'riteshnavadiya111@gmail.com',
+        contact: '9913554368',
+        name: 'Razorpay Software',
+      },
+      theme: {color: '#6583f0'},
+    };
+    RazorpayCheckout.open(options)
+      .then(data => {
+        alert(`Success: ${data.razorpay_payment_id}`);
+        orderPlace(data.razorpay_payment_id);
+      })
+      .catch(error => {
+        alert(`Error: ${error.code} | ${error.description}`);
+      });
   };
   return (
     <View style={styles.container}>
@@ -247,29 +296,7 @@ const Checkouts = () => {
         title={'Pay & Order'}
         color={'#fff'}
         onClick={() => {
-          var options = {
-            description: 'Credits towards consultation',
-            image: 'https://i.imgur.com/3g7nmJC.png',
-            currency: 'INR',
-            key: 'rzp_test_hKEvVbnoGv26xA', // Your api key
-            amount: '5000',
-            name: 'Pay',
-            prefill: {
-              email: 'riteshnavadiya111@gmail.com',
-              contact: '9913554368',
-              name: 'Razorpay Software',
-            },
-            theme: {color: '#6583f0'},
-          };
-          RazorpayCheckout.open(options)
-            .then(data => {
-              // handle success
-              alert(`Success: ${data.razorpay_payment_id}`);
-            })
-            .catch(error => {
-              // handle failure
-              alert(`Error: ${error.code} | ${error.description}`);
-            });
+          payNow();
         }}
       />
     </View>

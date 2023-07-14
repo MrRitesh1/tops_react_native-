@@ -27,7 +27,9 @@ const User = () => {
       <TouchableOpacity style={[styles.tab, {marginTop: 40}]}>
         <Text style={styles.btnText}>Edit Profile</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.tab, {marginTop: 20}]}>
+      <TouchableOpacity
+        style={[styles.tab, {marginTop: 20}]}
+        onPress={() => navigation.navigate('Order')}>
         <Text style={styles.btnText}>Orders</Text>
       </TouchableOpacity>
       <TouchableOpacity

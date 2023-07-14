@@ -10,6 +10,8 @@ import Welcome from '../screen/Welcome';
 import Checkouts from '../screen/Checkouts';
 import Address from '../screen/Address';
 import AddAddress from '../screen/AddAddress';
+import OrderSuccess from '../screen/OrderSuccess';
+import Order from '../screen/Orders';
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -60,6 +62,16 @@ const AppNavigator = () => {
         <Stack.Screen
           name="AddAddress"
           component={AddAddress}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="OrderSuccess"
+          component={OrderSuccess}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Order"
+          component={Order}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
