@@ -16,21 +16,46 @@ const SignUp = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState({field: '', message: ''});
 
   const addUser = () => {
-    firestore()
-      .collection('Users')
-      .add({
-        name: fullName,
-        mobile: mobile,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-      })
-      .then(() => {
-        console.log('User added!');
-        navigation.navigate('Login');
-      });
+    let loginError = {field: '', message: ''};
+    if (fullName === '') {
+      loginError.field = 'fullName';
+      loginError.message = 'required for fullName';
+      setError(loginError);
+    } else if (mobile === '') {
+      loginError.field = 'mobile';
+      loginError.message = 'required for mobile';
+      setError(loginError);
+    } else if (email === '') {
+      loginError.field = 'email';
+      loginError.message = 'required for email';
+      setError(loginError);
+    } else if (password === '') {
+      loginError.field = 'password';
+      loginError.message = 'required for password';
+      setError(loginError);
+    } else if (confirmPassword === '') {
+      loginError.field = 'confirmPassword';
+      loginError.message = 'required for confirmPassword';
+      setError(loginError);
+    } else {
+      setError({field: '', message: ''});
+      firestore()
+        .collection('Users')
+        .add({
+          name: fullName,
+          mobile: mobile,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+        })
+        .then(() => {
+          console.log('User added!');
+          navigation.navigate('Login');
+        });
+    }
   };
 
   return (
@@ -72,6 +97,9 @@ const SignUp = ({navigation}) => {
               onChangeText={tex => setFullName(tex)}
             />
           </View>
+          {error.field === 'fullName' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
           {/* <View style={[styles.inputText, styles.shado]}>
             <Image
               source={require('../assets/images/padlock.png')}
@@ -95,6 +123,9 @@ const SignUp = ({navigation}) => {
               onChangeText={tex => setMobile(tex)}
             />
           </View>
+          {error.field === 'mobile' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
           <View style={[styles.inputText, styles.shado]}>
             <Image
               source={require('../assets/images/email.png')}
@@ -107,6 +138,9 @@ const SignUp = ({navigation}) => {
               onChangeText={tex => setEmail(tex)}
             />
           </View>
+          {error.field === 'email' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
           <View style={[styles.inputText, styles.shado]}>
             <Image
               source={require('../assets/images/padlock.png')}
@@ -120,6 +154,9 @@ const SignUp = ({navigation}) => {
               onChangeText={tex => setPassword(tex)}
             />
           </View>
+          {error.field === 'password' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
           <View style={[styles.inputText, styles.shado]}>
             <Image
               source={require('../assets/images/padlock.png')}
@@ -133,6 +170,9 @@ const SignUp = ({navigation}) => {
               onChangeText={tex => setConfirmPassword(tex)}
             />
           </View>
+          {error.field === 'confirmPassword' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
           <View style={[styles.botBodyL, styles.shado]}>
             <TouchableOpacity
               onPress={() => {
@@ -149,7 +189,7 @@ const SignUp = ({navigation}) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <Text
+          {/* <Text
             style={{
               textAlign: 'center',
               marginTop: 30,
@@ -157,8 +197,8 @@ const SignUp = ({navigation}) => {
               fontSize: 18,
             }}>
             -- Or SignIn With --
-          </Text>
-          <View
+          </Text> */}
+          {/* <View
             style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
             <TouchableOpacity
               style={[
@@ -190,7 +230,7 @@ const SignUp = ({navigation}) => {
                 style={{height: 50, width: 50, margin: 10}}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View style={[styles.botBodyR, styles.shado]}>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text
@@ -297,5 +337,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
+  },
+  validatorText: {
+    color: 'red',
+    textAlign: 'right',
+    marginRight: 15,
+    fontWeight: '700',
+    fontSize: 16,
   },
 });

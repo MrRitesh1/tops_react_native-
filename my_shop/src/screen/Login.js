@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -18,6 +19,7 @@ const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState({});
+  const [error, setError] = useState({field: '', message: ''});
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -86,14 +88,25 @@ const Login = ({navigation}) => {
     }
   };
   const loginUsar = () => {
-    firestore()
-      .collection('Users')
-      .where('email', '==', email)
-      // .where('password', '==', password)
-      .get()
-      .then(querySnapshot => {
-        console.log('---', querySnapshot.docs[0]._data);
-      });
+    let loginError = {field: '', message: ''};
+    if (email === '') {
+      loginError.field = 'email';
+      loginError.message = 'required for email';
+      setError(loginError);
+    } else if (password === '') {
+      loginError.field = 'password';
+      loginError.message = 'required for password';
+      setError(loginError);
+    } else {
+      firestore()
+        .collection('Users')
+        .where('email', '==', email)
+        .where('password', '==', password)
+        .get()
+        .then(querySnapshot => {
+          console.log('---', querySnapshot.docs[0]._data);
+        });
+    }
   };
   return (
     <View style={styles.mainBody}>
@@ -134,6 +147,9 @@ const Login = ({navigation}) => {
               onChangeText={tex => setEmail(tex)}
             />
           </View>
+          {error.field === 'email' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
           <View style={[styles.inputText, styles.shado]}>
             <Image
               source={require('../assets/images/padlock.png')}
@@ -147,6 +163,9 @@ const Login = ({navigation}) => {
               onChangeText={tex => setPassword(tex)}
             />
           </View>
+          {error.field === 'password' && (
+            <Text style={styles.validatorText}>{error.message}</Text>
+          )}
           <View style={[styles.botBodyL, styles.shado]}>
             <TouchableOpacity
               onPress={() => {
@@ -345,5 +364,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingLeft: 10,
+  },
+  validatorText: {
+    color: 'red',
+    textAlign: 'right',
+    marginRight: 15,
+    fontWeight: '700',
+    fontSize: 16,
   },
 });
