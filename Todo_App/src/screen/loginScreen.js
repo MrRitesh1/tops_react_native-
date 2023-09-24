@@ -49,11 +49,11 @@ export const LoginScreen = ({navigation}) => {
       signInWithEmailAndPassword(auth, email, passwerd)
         .then(async ({user}) => {
           console.log('login --', user);
-          // handleCheck(user)
+          handleCheck(user);
           getData(user.uid);
           navigation.navigate('home');
         })
-        .catch(err => handleCheck(err));
+        .catch(err => console.log(err));
     }
   };
   return (
